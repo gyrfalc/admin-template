@@ -15,6 +15,7 @@
 </head>
 <body>
 	<s:url id="baseURL" value="/fabric" includeParams="none"/>
+	<s:url id="familyURL" value="/fabricfamily" includeParams="none"/>
 
 	<div class="welcome">Welcome, <s:property value="userNm"/>&nbsp;&nbsp;<a href="#">logout</a></div>
 	<div class="table-list">
@@ -22,7 +23,7 @@
 		<div class="table-list-wrapper">
 		<ul>
 			<li><a href="${baseURL}/list">fabric</a>
-			<li><a href="${baseURL}/list">table_name</a>
+			<li><a href="${familyURL}/list">fabric family</a>
 			<li><a href="${baseURL}/list">longer_table_name</a>
 			<li><a href="${baseURL}/list">table_name</a>
 			<li><a href="${baseURL}/list">longer_table_name</a>
@@ -118,10 +119,10 @@
 			Required fields are marked with a red asterisk. Field data types are noted next to the input fields. 
 		</p>
 		<p>	
-			Fields that accept HTML input may be previewed in a pop-up window.  
-			To author valid HTML data, look for a free HTML editor online.  Learn how to enter
+			Fields that accept HTML input may be "previewed" in view mode, but note that <em>styles do not necessarily match the application style sheet</em>.  
+			To author valid HTML data, look for a free HTML editor online.  Enter
 			trademarks and other symbols using HTML codes. <em>Note that carriage returns and line feeds
-			do not work in HTML, and you must not enter them in your data or you could break the web application scripts</em>.  
+			do not work in HTML, and you must not enter them in your data or you may break the web application scripts</em>.  
 		</p>
 		<p>	
 			<em>DO NOT COPY AND PASTE CONTENT FROM MICROSOFT WORD OR EXCEL.</em>  
@@ -155,9 +156,12 @@
 	<div class="sub-content">
 	<form action="${baseURL}/ins" method="post">
 	<ul class="form-layout">
-		<li><label>Code <span class="required">*</span></label> <s:textfield name="model.fabricCd" /></li>
-		<li><label>Name <span class="required">*</span></label> <s:textfield name="model.fabricNm" /></li>
-		<li><label>Description <span class="required">*</span></label> <s:textfield name="model.fabricDesc" /></li>
+		<li><label>Code <span class="required">*</span></label> <s:textfield name="model.fabricCd" cssClass="small"/>&nbsp;<span class="field-info">Text(10)</span></li>
+		<li><label>Name <span class="required">*</span></label> <s:textfield name="model.fabricNm" cssClass="large"/>&nbsp;<span class="field-info">Text(100)</span></li>
+		<li><label>Description <span class="required">*</span></label> <s:textarea id="fld-fabricDesc" name="model.fabricDesc" />&nbsp;<span class="field-info">Text(255)</span> </li>
+		<li><label>Family <span class="required">*</span></label> 
+			<s:select name="model.fabricFamilyCd" list="lstFabricFamilyCd" listKey="id" listValue="name" cssClass="large" />
+		 </li>
 	
 	</ul>
 	</form>

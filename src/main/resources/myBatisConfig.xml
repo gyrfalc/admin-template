@@ -12,7 +12,10 @@
     </settings>
    
     <typeAliases>
+		<typeAlias alias="AdminNotice"  type="com.csc.admin.model.AdminNotice"/>
+		<typeAlias alias="ListItem"  type="com.csc.admin.model.ListItem"/>
 		<typeAlias alias="Fabric"  type="com.csc.admin.model.Fabric"/>
+		<typeAlias alias="FabricFamily"  type="com.csc.admin.model.FabricFamily"/>
     </typeAliases>
 
     <environments default="admin">
@@ -29,6 +32,8 @@
         
     <!-- Identify all SQL Map XML files to be loaded by this SQL map. Relative to classpath -->
     <mappers>
+        <mapper resource="com/csc/admin/data/map/sql/AdminMap.xml"/>
         <mapper resource="com/csc/admin/data/map/sql/FabricMap.xml"/>
+        <mapper resource="com/csc/admin/data/map/sql/FabricFamilyMap.xml"/>
     </mappers>
 </configuration>

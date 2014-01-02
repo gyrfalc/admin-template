@@ -19,15 +19,20 @@ input {
 	border: 1px solid #bbb;
 }
 
-input.small {
-	width: 100px;
+select {
+	font-family: verdana, arial, sans-serif;
+	font-size: 11px;
+	color: #444;	
+	border: 1px solid #bbb;
 }
-input.medium {
-	width: 200px;
-}
-input.large {
-	width: 400px;
-}
+
+
+input.small { width: 100px; }
+input.medium { width: 200px; }
+input.large { width: 400px; }
+select.small { width: 100px; }
+select.medium { width: 200px; }
+select.large { width: 400px; }
 
 textarea {
 	font-family: verdana, arial, sans-serif;
@@ -116,9 +121,34 @@ div.table-list {
 }
 
 .table-list-wrapper {
-	height: 565px;
+	height: 550px;
 	overflow-y: scroll;
+	padding: 5px;
 }
+
+.table-list-wrapper  ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.table-list-wrapper  li {
+	padding: 3px;
+}
+.table-list-wrapper  li:hover {
+	background-color: #D3D6FF;
+}
+
+.table-list-wrapper  a {
+	color: #0000ee;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.intro-topic {
+	font-size: 120%;
+	font-weight: bold;
+}
+
 .instructions {
 	width: 200px;
 	float: right;
@@ -132,6 +162,14 @@ div.table-list {
 	font-style: italic;
 }
 
+.content-home {
+	width: 50%;
+	margin: 5%;
+	border: 1px solid #ddd;
+	box-shadow: 10px 10px 5px #888888;
+	padding: 20px;
+}
+
 .content {
 	margin-left: 220px;
 }
@@ -141,6 +179,13 @@ div.table-list {
 
 .clear {
 	clear: both;
+}
+
+#div-html-editor {
+	padding: 20px;
+	width: 600px;
+	height: 300px;
+	display: none;
 }
 
 ul.form-layout {
@@ -172,6 +217,26 @@ ul.menu-layout a  {
 	color: white;
 	text-decoration: none;
 }
+
+.login-container {
+	width: 400px;
+	height: 200px;
+	margin: 100px auto;
+	padding: 20px;
+	background-color: #666;
+	border-radius: 15px;
+}
+
+.login {
+	background-color: #eee;
+	border-radius: 10px;
+	padding: 20px;
+	height: 160px;
+	color: 666;
+}
+.login ul { width: 300px; list-style-type: none; margin: 30px auto}
+.login li { margin: 10px 0}
+.login label { width: 70px}
 
 #header {
 	color: #bbb;

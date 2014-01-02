@@ -7,6 +7,7 @@
 </head>
 <body>
 	<s:url id="baseURL" value="/fabric" includeParams="none"/>
+	<s:url id="familyURL" value="/fabricfamily" includeParams="none"/>
 
 	<div class="welcome">Welcome, <s:property value="userNm"/>&nbsp;&nbsp;<a href="#">logout</a></div>
 	
@@ -17,7 +18,7 @@
 		<div class="table-list-wrapper">
 		<ul>
 			<li><a href="${baseURL}/list">fabric</a>
-			<li><a href="${baseURL}/list">table_name</a>
+			<li><a href="${familyURL}/list">fabric family</a>
 			<li><a href="${baseURL}/list">longer_table_name</a>
 			<li><a href="${baseURL}/list">table_name</a>
 			<li><a href="${baseURL}/list">longer_table_name</a>
@@ -127,6 +128,7 @@
 			  <display:column property="id" title="Code"  />
 			  <display:column property="fabricNm" title="Name"/>
 			  <display:column property="fabricDesc" title="Description" />
+			  <display:column property="fabricFamilyCd" title="Family" />
 			  <display:column property="modBy" title="Mod By"/>
 			  <display:column property="modDt" title="Mod Date"/>
 		</display:table>

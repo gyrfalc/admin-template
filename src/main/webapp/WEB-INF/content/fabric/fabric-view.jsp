@@ -7,6 +7,7 @@
 </head>
 <body>
 	<s:url id="baseURL" value="/fabric" includeParams="none"/>
+	<s:url id="familyURL" value="/fabricfamily" includeParams="none"/>
 
 	<div class="welcome">Welcome, <s:property value="userNm"/>&nbsp;&nbsp;<a href="#">logout</a></div>
 	
@@ -15,7 +16,7 @@
 		<div class="table-list-wrapper">
 		<ul>
 			<li><a href="${baseURL}/list">fabric</a>
-			<li><a href="${baseURL}/list">table_name</a>
+			<li><a href="${familyURL}/list">fabric family</a>
 			<li><a href="${baseURL}/list">longer_table_name</a>
 			<li><a href="${baseURL}/list">table_name</a>
 			<li><a href="${baseURL}/list">longer_table_name</a>
@@ -127,6 +128,7 @@
 		<tr><td class="label">Code</td><td> <s:property value="model.fabricCd" escape="false"/></td></tr>
 		<tr><td class="label">Name</td><td> <s:property value="model.fabricNm" escape="false"/></td></tr>
 		<tr><td class="label">Description</td><td> <s:property value="model.fabricDesc" escape="false"/></td></tr>
+		<tr><td class="label">Family</td><td> <s:property value="model.fabricFamilyCd" escape="false"/></td></tr>
 		<tr><td class="label">Mod By</td><td> <s:property value="model.modByNm" escape="false"/></td></tr>
 		<tr><td class="label">Mod Date</td><td> <s:property value="model.modDt" escape="false"/></td></tr>
 	

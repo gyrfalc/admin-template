@@ -63,7 +63,7 @@ public class BaseAction extends ActionSupport  implements SessionAware, Paramete
 	}
 	
 	public String getUserNm() {
-		return "Merle McCartney";
+		return "Joe User";
 	}
 	public void setUserNm(String userNm) {
 		this.userNm = userNm;

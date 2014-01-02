@@ -6,15 +6,17 @@
 	<%@ include file="/common/meta.jsp" %>
 
 	<title><decorator:title/></title>
+	<link rel="icon" href="<c:url value="/images/database_edit.png"/>" type="image/png" />
 	
 	<!-- DataTables CSS -->
 	<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
 	<!-- APP CSS -->
-	<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/style/app/style.css" />" />
+	<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/style/app.css" />" />
 	
 	 
 	<!-- jQuery -->
-	<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>	
 	 
 	<!-- DataTables -->
 	<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>	

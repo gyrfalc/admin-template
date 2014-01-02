@@ -3,9 +3,11 @@ package com.csc.admin.action;
 import java.util.Date;
 import java.util.List;
 
+import com.csc.admin.data.dao.AdminDao;
 import com.csc.admin.data.dao.FabricDao;
 import com.csc.admin.data.dao.MyBatisConfig;
 import com.csc.admin.model.Fabric;
+import com.csc.admin.model.ListItem;
 
 
 public class FabricAction extends BaseAction implements IActionMethods {
@@ -13,9 +15,12 @@ public class FabricAction extends BaseAction implements IActionMethods {
 	private static final long serialVersionUID = 1L;
 	private Fabric model;
 	private List<Fabric> modelList;
+	
+	private List<ListItem> lstFabricFamilyCd;
 
 	
 	private FabricDao dao = new FabricDao(MyBatisConfig.getSqlSessionFactory());
+	private AdminDao adao = new AdminDao(MyBatisConfig.getSqlSessionFactory());
 
 	public Fabric getModel() {
 		return model;
@@ -32,8 +37,25 @@ public class FabricAction extends BaseAction implements IActionMethods {
 		this.modelList = modelList;
 	}
 	
+	public List<ListItem> getLstFabricFamilyCd() {
+		return lstFabricFamilyCd;
+	}
+
+	public void setLstFabricFamilyCd(List<ListItem> lstFabricFamilyCd) {
+		this.lstFabricFamilyCd = lstFabricFamilyCd;
+	}
+	
 
 	////////////==========================================================
+	
+	private void loadLists() {
+		try {
+		   	lstFabricFamilyCd = adao.selList("lst_fabric_family");
+			
+		} catch (Exception e) {
+			log.error("failed to load lists", e);
+		}
+	}
 	
 	@Override
 	public String list() {
@@ -75,6 +97,7 @@ public class FabricAction extends BaseAction implements IActionMethods {
 	@Override
     public String edit()  {
     	log.debug("Fabric edit...");
+    	loadLists();
     	return view();
     }
 	
@@ -82,7 +105,8 @@ public class FabricAction extends BaseAction implements IActionMethods {
 	public String add() {
     	log.debug("Fabric add...");
     	model = new Fabric();
-    	return SUCCESS;
+    	loadLists();
+     	return SUCCESS;
 	}
 	
 	@Override
@@ -117,6 +141,7 @@ public class FabricAction extends BaseAction implements IActionMethods {
         	return SUCCESS;
             
     	} catch (Exception e) {
+    		loadLists();
     		addActionError("Failed to create fabric record: " + e.getMessage());
     		return "input";      		
     	}
@@ -149,6 +174,7 @@ public class FabricAction extends BaseAction implements IActionMethods {
          	return SUCCESS;
             
     	} catch (Exception e) {
+    		loadLists();
     		addActionError("Failed to update fabric record: " + e.getMessage());
     		return "input";   		
     	}
@@ -177,6 +203,7 @@ public class FabricAction extends BaseAction implements IActionMethods {
     	}
 
 	}
+
 
 
 }

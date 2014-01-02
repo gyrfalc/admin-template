@@ -12,30 +12,47 @@
 	<constant name="struts.enable.SlashesInActionNames" value="true"/>
 	<!-- must have empty comma to allow for empty extension, else Struts interferes with static resources like CSS files  -->
 	<constant name="struts.action.extension" value=",html"/>
+	<constant name="struts.action.excludePattern" value="/ckeditor"/>
+	
+	<package name="default" namespace="/" extends="struts-default">
+		<default-action-ref name="index"/>
+	
+		<action name="index">
+			<result>index.jsp</result>
+		</action>
+		
+		<action name="home" class="com.csc.admin.action.AdminNoticeAction" method="list">
+			<result name="success">/WEB-INF/content/admin-notice/admin-notice-list.jsp</result>
+			<interceptor-ref name="basicStack"/>
+		</action>
+		
+	</package>
+	
 	
 	<package name="fabric" namespace="/fabric" extends="struts-default">
+		<default-action-ref name="list"/>
 	
 		<action name="list" class="com.csc.admin.action.FabricAction" method="list">
-			<result name="success">/WEB-INF/content/fabric-list.jsp</result>
+			<result name="success">/WEB-INF/content/fabric/fabric-list.jsp</result>
 			<interceptor-ref name="basicStack"/>
 		</action>
 
 		<action name="view/*" class="com.csc.admin.action.FabricAction" method="view">
 			<param name="id">{1}</param>
-			<result name="success">/WEB-INF/content/fabric-view.jsp</result>
+			<result name="success">/WEB-INF/content/fabric/fabric-view.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
 		</action>
 		
 		<action name="edit/*" class="com.csc.admin.action.FabricAction" method="edit">
 			<param name="id">{1}</param>
-			<result name="success">/WEB-INF/content/fabric-edit.jsp</result>
+			<result name="success">/WEB-INF/content/fabric/fabric-edit.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
 		</action>
 		
 		<action name="new" class="com.csc.admin.action.FabricAction" method="add">
-			<result name="success">/WEB-INF/content/fabric-add.jsp</result>
+			<result name="success">/WEB-INF/content/fabric/fabric-add.jsp</result>
 			<interceptor-ref name="basicStack"/>
 		</action>
 		
@@ -44,13 +61,13 @@
 				<param name="actionName">view</param>
          		<param name="namespace">/fabric</param>
 			</result>
-			<result name="input">/WEB-INF/content/fabric-add.jsp</result>
+			<result name="input">/WEB-INF/content/fabric/fabric-add.jsp</result>
 			<interceptor-ref name="basicStack"/>
 		</action>
 		
 		<action name="upd" class="com.csc.admin.action.FabricAction" method="update">
 			<result name="success" type="redirectAction">view</result>
-			<result name="input">/WEB-INF/content/fabric-edit.jsp</result>
+			<result name="input">/WEB-INF/content/fabric/fabric-edit.jsp</result>
 			<interceptor-ref name="basicStack"/>
 		</action>
 		
@@ -58,8 +75,54 @@
 			<result name="success" type="redirectAction">list</result>
 			<interceptor-ref name="basicStack"/>
 		</action>
-		
-		
 	</package>
+	
+	<package name="fabricfamily" namespace="/fabricfamily" extends="struts-default">
+		<default-action-ref name="list"/>
+	
+		<action name="list" class="com.csc.admin.action.FabricFamilyAction" method="list">
+			<result name="success">/WEB-INF/content/fabric-family/fabric-family-list.jsp</result>
+			<interceptor-ref name="basicStack"/>
+		</action>
+
+		<action name="view/*" class="com.csc.admin.action.FabricFamilyAction" method="view">
+			<param name="id">{1}</param>
+			<result name="success">/WEB-INF/content/fabric-family/fabric-family-view.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+		</action>
+		
+		<action name="edit/*" class="com.csc.admin.action.FabricFamilyAction" method="edit">
+			<param name="id">{1}</param>
+			<result name="success">/WEB-INF/content/fabric-family/fabric-family-edit.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+		</action>
+		
+		<action name="new" class="com.csc.admin.action.FabricFamilyAction" method="add">
+			<result name="success">/WEB-INF/content/fabric-family/fabric-family-add.jsp</result>
+			<interceptor-ref name="basicStack"/>
+		</action>
+		
+		<action name="ins" class="com.csc.admin.action.FabricFamilyAction" method="insert">
+			<result name="success" type="redirectAction">
+				<param name="actionName">view</param>
+         		<param name="namespace">/fabricfamily</param>
+			</result>
+			<result name="input">/WEB-INF/content/fabric-family/fabric-family-add.jsp</result>
+			<interceptor-ref name="basicStack"/>
+		</action>
+		
+		<action name="upd" class="com.csc.admin.action.FabricFamilyAction" method="update">
+			<result name="success" type="redirectAction">view</result>
+			<result name="input">/WEB-INF/content/fabric-family/fabric-family-edit.jsp</result>
+			<interceptor-ref name="basicStack"/>
+		</action>
+		
+		<action name="del" class="com.csc.admin.action.FabricFamilyAction" method="delete">
+			<result name="success" type="redirectAction">list</result>
+			<interceptor-ref name="basicStack"/>
+		</action>
+	</package>	
 
 </struts>
