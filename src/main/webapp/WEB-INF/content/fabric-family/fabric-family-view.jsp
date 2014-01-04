@@ -7,103 +7,13 @@
 </head>
 <body>
 	<s:url id="baseURL" value="/fabricfamily" includeParams="none"/>
-	<s:url id="fabricURL" value="/fabric" includeParams="none"/>
+	<jsp:include page="/common/page-header.jsp"/>	
 
-	<div class="welcome">Welcome, <s:property value="userNm"/>&nbsp;&nbsp;<a href="#">logout</a></div>
-	
-	<div class="table-list">
-		<h3 class="page-caption">Table List</h3>
-		<div class="table-list-wrapper">
-		<ul>
-			<li><a href="${fabricURL}/list">fabric</a>
-			<li><a href="${baseURL}/list">fabric family</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			
+	<jsp:include page="/common/table-list.jsp"/>	
 		
-		</ul>
-		</div>
-	</div>
-	
 	<div class="content">
 	<h3 class="page-caption">Fabric</h3>
+	<jsp:include page="/common/audit-bar.jsp"/>	
 	<ul class="menu-layout">
 		<li><a href="${baseURL}/list">list</a></li>	
 		<li><a href="${baseURL}/new">new</a></li>	

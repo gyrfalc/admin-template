@@ -9,8 +9,6 @@
 	<s:url id="baseURL" value="/fabric" includeParams="none"/>
 	<s:url id="familyURL" value="/fabricfamily" includeParams="none"/>
 
-	<div class="welcome">Welcome, <s:property value="userNm"/>&nbsp;&nbsp;<a href="#">logout</a></div>
-	
 	<table style="border-collapse: collapse; width: 100%;"><tr>
 	<td style="vertical-align:top; width: 220px">
 		<div class="table-list" style="float:none">

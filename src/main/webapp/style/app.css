@@ -87,6 +87,17 @@ td.label {
 	color: red;
 	font-size: 110%;
 }
+.audit-bar {
+	padding: 3px;
+	background-color: #ffff99;
+	border-bottom: 1px solid #bbb;
+}
+
+.audit-bar label {
+	display: inline;
+}
+
+
 .action-error {
 	color: red;
 	font-style: italic;

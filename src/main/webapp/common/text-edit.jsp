@@ -31,12 +31,14 @@
         	htmlSrcFldId = txtFldId;
         	CKEDITOR.instances.editor1.setData( $(txtFldId).val() );
          	$("#div-form-editor").hide();
+         	$("#div-action-menu").hide();
          	$("#div-html-editor").show();
          }
          
          function closeEditor() {
           	$("#div-html-editor").hide();
          	$("#div-form-editor").show();
+         	$("#div-action-menu").show();
          }
          
          function saveEditor() {

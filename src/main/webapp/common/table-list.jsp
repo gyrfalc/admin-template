@@ -1,0 +1,93 @@
+<%@ include file="/common/taglibs.jsp"%>
+	<s:url id="contextURL" value="/" includeParams="none"/>
+
+	<div class="table-list">
+		<h3 class="page-caption">Table List</h3>
+		<div class="table-list-wrapper">
+		<ul>
+			<li><a href="${contextURL}/fabric/list">fabric</a>
+			<li><a href="${contextURL}/fabricfamily/list">fabric family</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			<li><a href="${contextURL}/fabric/list">table_name</a>
+			<li><a href="${contextURL}/fabric/list">longer_table_name</a>
+			
+		
+		</ul>
+		</div>
+	</div>

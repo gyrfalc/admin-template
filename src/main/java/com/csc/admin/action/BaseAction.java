@@ -15,6 +15,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.csc.admin.data.dao.AdminDao;
+import com.csc.admin.data.dao.MyBatisConfig;
+import com.csc.admin.model.ListItem;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BaseAction extends ActionSupport  implements SessionAware, ParameterAware, ServletRequestAware, ServletResponseAware {
@@ -116,6 +119,62 @@ public class BaseAction extends ActionSupport  implements SessionAware, Paramete
 				addActionMessage(msg);
 			}
 		}
+	}
+	public String getLangCd() {
+		String langCd = (String) session.get("lang-cd");
+		if (StringUtils.isEmpty(langCd)) {
+			langCd = "en";
+		}
+		return langCd;
+	}
+	public void setLangCd(String langCd) {
+		session.put("lang-cd", langCd);
+	}
+	
+	public String getLangNm() {
+		String langNm = (String) session.get("lang-nm");
+		if (StringUtils.isEmpty(langNm)) {
+			langNm = "English";
+		}
+		return langNm;		
+	}
+	public void setLangNm(String langNm) {
+		session.put("lang-nm", langNm);
+	}
+	
+	private List<ListItem> buildMinimalLangList() {
+		List<ListItem>  list = new ArrayList<ListItem>();
+		ListItem l = new ListItem();
+		l.setId("en");
+		l.setName("English");
+		list.add(l);
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ListItem> getLangList() {
+		List<ListItem> list = (List<ListItem>) session.get("lang-list");
+		if (list == null || list.size() == 0) {
+			try {
+				AdminDao adao = new AdminDao(MyBatisConfig.getSqlSessionFactory());
+				list = adao.selList("lst_language");
+				if (list.size() == 0) {
+					list = this.buildMinimalLangList();
+				}
+				
+			} catch (Exception e) {
+				log.error("failed to retrieve language list", e);
+				list = this.buildMinimalLangList();
+			}
+			
+			setLangList(list);
+		}
+		
+		return list;
+	}
+	
+	public void setLangList(List<ListItem> list) {
+		session.put("lang-list", list);		
 	}
 	
 

@@ -72,4 +72,14 @@ public class AdminDao extends BaseDao {
 		}				
 	}
 
+	public String selLangNm(String langCd) {
+		log.debug("selecting lang name for code = " + langCd);
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			IAdminMap map = sqlSession.getMapper(IAdminMap.class);
+			return map.selLangNm(langCd);
+		} finally {
+			sqlSession.close();
+		}				
+	}
 }

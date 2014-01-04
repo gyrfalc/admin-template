@@ -3,114 +3,13 @@
 <html>
 <head>
 	<title>Fabric</title>
-
-	<script type="text/javascript">
 	
-		function resetForm() {
-			document.forms[0].reset();
-		}
-		
-		function submitForm() {
-			document.forms[0].submit();
-		}
-	
-	</script>	
 </head>
 <body>
+	<jsp:include page="/common/page-header.jsp"/>	
 	<s:url id="baseURL" value="/fabricfamily" includeParams="none"/>
-	<s:url id="fabricURL" value="/fabric" includeParams="none"/>
 
-	<div class="welcome">Welcome, <s:property value="userNm"/>&nbsp;&nbsp;<a href="#">logout</a></div>
-	<div class="table-list">
-		<h3 class="page-caption">Table List</h3>
-		<div class="table-list-wrapper">
-		<ul>
-			<li><a href="${fabricURL}/list">fabric</a>
-			<li><a href="${baseURL}/list">fabric family</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			<li><a href="${baseURL}/list">table_name</a>
-			<li><a href="${baseURL}/list">longer_table_name</a>
-			
-		
-		</ul>
-		</div>
-	</div>
+	<jsp:include page="/common/table-list.jsp"/>	
 	
 	<div class="instructions">
 		<h3>Instructions</h3>
@@ -136,36 +35,21 @@
 	</div>
 	
 	<div class="content">
-	<h3 class="page-caption">Fabric Family (Edit)</h3>
-	<ul class="menu-layout">
-		<li><a href="${baseURL}/list">cancel</a></li>	
-		<li><a href="#" onclick="resetForm()">undo</a></li>	
-		<li><a href="#" onclick="submitForm(); return false;">save</a></li>	
-	</ul>
+		<h3 class="page-caption">Fabric Family (Edit)</h3>
+		<jsp:include page="/common/audit-bar.jsp"/>	
 	
-	
-	<s:if test="hasActionMessages()">
-	   <div class="action-message">
-	      <s:actionmessage/>
-	   </div>
-	</s:if>
-	
-	<s:if test="hasActionErrors()">
-	   <div class="action-error">
-	      <s:actionerror/>
-	   </div>
-	</s:if>
-	
-	<div class="sub-content">
-	<form action="${baseURL}/upd" method="post">
-	<ul class="form-layout">
-		<li><label>Code <span class="required">*</span></label> <s:property value="model.fabricFamilyCd"/>&nbsp;<s:hidden name="model.fabricFamilyCd" /> </li>
-		<li><label>Name <span class="required">*</span></label> <s:textfield name="model.fabricFamilyNm" cssClass="large"/>&nbsp;<span class="field-info">Text(100)</span></li>
-		<li><label>Description <span class="required">*</span></label> <s:textarea id="fld-fabricDesc" name="model.fabricFamilyDesc" />&nbsp;<span class="field-info">Text(255)</span> </li>
-	
-	</ul>
-	</form>
-	</div>
+		<jsp:include page="/common/edit-menu.jsp"/>	
+		
+		<div class="sub-content">
+			<form action="${baseURL}/upd" method="post">
+				<ul class="form-layout">
+					<li><label>Code <span class="required">*</span></label> <s:property value="model.fabricFamilyCd"/>&nbsp;<s:hidden name="model.fabricFamilyCd" /> </li>
+					<li><label>Name <span class="required">*</span></label> <s:textfield name="model.fabricFamilyNm" cssClass="large"/>&nbsp;<span class="field-info">Text(100)</span></li>
+					<li><label>Description <span class="required">*</span></label> <s:textarea id="fld-fabricDesc" name="model.fabricFamilyDesc" />&nbsp;<span class="field-info">Text(255)</span> </li>
+				
+				</ul>
+			</form>
+		</div>
 	</div>
 
 </body>

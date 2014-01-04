@@ -16,4 +16,5 @@ public interface IAdminMap {
 	
 	public List<ListItem> selList(@Param("viewNm") String viewNm);
 
+	public String selLangNm(@Param("langCd") String langCd);
 }

@@ -125,4 +125,12 @@
 		</action>
 	</package>	
 
+	<package name="ajax" namespace="/ajax" extends="struts-default">
+		
+		<action name="lang" class="com.csc.admin.action.AjaxAction" method="setLangChoice">
+			<result name="success">/WEB-INF/content/ajax-resp.jsp</result>
+			<interceptor-ref name="basicStack"/>
+		</action>
+		
+	</package>
 </struts>
