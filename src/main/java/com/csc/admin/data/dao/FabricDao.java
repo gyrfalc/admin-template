@@ -14,12 +14,12 @@ public class FabricDao extends BaseDao {
 		super(sqlSessionFactory);
 	}
 	
-	public List<Fabric> lstFabric() {
-		log.debug("list Fabric...");
+	public List<Fabric> lstFabric(String langCd) {
+		log.debug("list Fabric for lang = " + langCd);
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			IFabricMap map = sqlSession.getMapper(IFabricMap.class);
-			return map.lstFabric();
+			return map.lstFabric(langCd);
 		} finally {
 			sqlSession.close();
 		}

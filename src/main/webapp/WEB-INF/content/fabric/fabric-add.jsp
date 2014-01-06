@@ -17,16 +17,26 @@
 		
 		<div id="div-form-editor" class="sub-content">
 			<form action="${baseURL}/ins" method="post">
+				<jsp:include page="/common/clone-lang.jsp"/>	
+			
 				<ul class="form-layout">
 					<li><label>Code <span class="required">*</span></label> <s:textfield name="model.fabricCd" cssClass="small"/>&nbsp;<span class="field-info">Text(10)</span></li>
 					<li><label>Name <span class="required">*</span></label> <s:textfield name="model.fabricNm" cssClass="large"/>&nbsp;<span class="field-info">Text(100)</span></li>
-					<li><label>Description <span class="required">*</span></label> <s:textarea id="fld-fabricDesc" name="model.fabricDesc" />&nbsp;<span class="field-info">Text(255)</span> </li>
+					<li><label>Description <span class="required">*</span></label> <s:textarea id="fld-fabricDesc" name="model.fabricDesc" />
+						&nbsp;<a href="#" onclick="showEditor('#fld-fabricDesc');return false;">HTML</a>
+						&nbsp;<span class="field-info">Text(255)</span> </li>
 					<li><label>Family <span class="required">*</span></label> 
 						<s:select name="model.fabricFamilyCd" list="lstFabricFamilyCd" listKey="id" listValue="name" cssClass="large" />
 					 </li>
 				</ul>
 			</form>
 		</div>
+		
+		<h1>Hello!</h1>
+		
+		<jsp:include page="/common/text-edit.jsp"/>
+
+		
 	</div>
 </body>
 </html>

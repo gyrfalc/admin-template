@@ -3,6 +3,8 @@ package com.csc.admin.model;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public abstract class BaseModel {
 	
 	protected Date modDt;
@@ -13,10 +15,13 @@ public abstract class BaseModel {
 	
 	protected String langCd;
 	protected String langNm;
+	
+	protected String cloneLang;
 
 	public abstract String getId();
 	public abstract String getUrl();
 	public abstract List<String> validate();
+	public abstract boolean isLangEnabled();
 	
 	public String getPubStatNm() {
 		String retval = "UNKNOWN";
@@ -102,6 +107,20 @@ public abstract class BaseModel {
 	public void setLangNm(String langNm) {
 		this.langNm = langNm;
 	}
-
+	public String getCloneLang() {
+		if (StringUtils.isEmpty(cloneLang)) {
+			return "N";
+		} else {
+			return cloneLang;
+		}
+		
+	}
+	public void setCloneLang(String cloneLang) {
+		this.cloneLang = cloneLang;
+	}
+	
+	public boolean doCloneLang() {
+		return "Y".equals(getCloneLang());
+	}
 
 }

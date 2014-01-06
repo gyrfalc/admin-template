@@ -60,7 +60,7 @@ public class FabricAction extends BaseAction implements IActionMethods {
 	@Override
 	public String list() {
 		log.debug("Fabric list...");
-		modelList = dao.lstFabric();	
+		modelList = dao.lstFabric(super.getLangCd());	
 		
 		convertSessionMessagesToActionMessages("fabric");
 		
@@ -74,7 +74,8 @@ public class FabricAction extends BaseAction implements IActionMethods {
         	validateId();
 
         	Fabric params = new Fabric();
-        	params.setFabricCd(id);
+        	params.setFabricCd(id);	
+        	params.setLangCd(super.getLangCd());
         	
         	model = dao.selFabric(params);
         	
@@ -114,7 +115,9 @@ public class FabricAction extends BaseAction implements IActionMethods {
     	log.debug("Fabric insert...");
     	
     	try {
-        	List<String> msgs = model.validate();
+    		model.setLangCd(super.getLangCd());
+    		
+    		List<String> msgs = model.validate();
         	if (msgs.size() > 0) {
         		for (String s: msgs) {
         			addActionError(s);
@@ -131,12 +134,38 @@ public class FabricAction extends BaseAction implements IActionMethods {
         	model.setModBy(getSessionUserId());
         	model.setModDt(new Date());
         	
-        	dao.insFabric(model);
+        	if (model.isLangEnabled() && model.doCloneLang()) {
+        		List<ListItem> langs = super.getLangList();
+        		boolean hasErrs = false;
+        		for (ListItem i : langs) {
+        			model.setLangCd(i.getId());
+        			try {
+        				if (i.getId().equals(super.getLangCd())) {
+        					model.setPubStat("MOD");
+        				} else {
+        					model.setPubStat("TRANS");
+        				}
+        				dao.insFabric(model);
+        			} catch (Exception e) {
+        				addActionError("Failed to create record for language " + i.getName());
+        				hasErrs = true;
+        			}
+        			
+        		}
+        		if (!hasErrs) {
+                	super.addSessionMessage("fabric", "Records created successfully.");
+        		}
+        	} else {    
+        		model.setPubStat("MOD");
+        		model.setLangCd(super.getLangCd());
+            	dao.insFabric(model);
+            	super.addSessionMessage("fabric", "Record created successfully.");
+        	}
+        	
         	model = dao.selFabric(model);
         	
         	//to accommodate page redirect
         	session.put("modelId", model.getId());
-        	super.addSessionMessage("fabric", "Record created.");
         	
         	return SUCCESS;
             
@@ -164,6 +193,8 @@ public class FabricAction extends BaseAction implements IActionMethods {
 
         	model.setModBy(getSessionUserId());
         	model.setModDt(new Date());
+        	model.setLangCd(super.getLangCd());
+    		model.setPubStat("MOD");
 
         	dao.updFabric(model);
         	
@@ -189,6 +220,7 @@ public class FabricAction extends BaseAction implements IActionMethods {
     	try {
         	Fabric params = new Fabric();
         	params.setFabricCd(id);
+        	params.setLangCd(super.getLangCd());
         	dao.delFabric(params);  
         	
         	//to accommodate page redirect

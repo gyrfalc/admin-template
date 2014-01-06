@@ -16,24 +16,10 @@ public class Fabric extends BaseModel {
 	private static final int LEN_FABRIC_NM = 100;
 	private static final int LEN_FABRIC_DESC = 255;
 	private static final int LEN_FABRIC_FAMILY_CD = 10;
-	
-	public String getFabricCd() {
-		return fabricCd;
-	}
-	public void setFabricCd(String fabricCd) {
-		this.fabricCd = fabricCd;
-	}
-	public String getFabricNm() {
-		return fabricNm;
-	}
-	public void setFabricNm(String fabricNm) {
-		this.fabricNm = fabricNm;
-	}
-	public String getFabricDesc() {
-		return fabricDesc;
-	}
-	public void setFabricDesc(String fabricDesc) {
-		this.fabricDesc = fabricDesc;
+
+	@Override
+	public boolean isLangEnabled() {
+		return true;
 	}
 	@Override
 	public String getId() {
@@ -59,12 +45,34 @@ public class Fabric extends BaseModel {
 		
 		return msgs;
 	}
+	
+	
+	public String getFabricCd() {
+		return fabricCd;
+	}
+	public void setFabricCd(String fabricCd) {
+		this.fabricCd = fabricCd;
+	}
+	public String getFabricNm() {
+		return fabricNm;
+	}
+	public void setFabricNm(String fabricNm) {
+		this.fabricNm = fabricNm;
+	}
+	public String getFabricDesc() {
+		return fabricDesc;
+	}
+	public void setFabricDesc(String fabricDesc) {
+		this.fabricDesc = fabricDesc;
+	}
+
 	public String getFabricFamilyCd() {
 		return fabricFamilyCd;
 	}
 	public void setFabricFamilyCd(String fabricFamilyCd) {
 		this.fabricFamilyCd = fabricFamilyCd;
 	}
+
 
 
 }

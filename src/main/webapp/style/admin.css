@@ -229,6 +229,16 @@ ul.menu-layout a  {
 	text-decoration: none;
 }
 
+ul.clone-lang {
+	list-style-type:none;
+	padding: 10px;
+	background-color: #ffff99;
+	border-bottom: 2px solid #bbb;
+	border-right: 2px solid #bbb;
+	width: 400px;
+	margin: 0;	
+}
+
 .login-container {
 	width: 400px;
 	height: 200px;

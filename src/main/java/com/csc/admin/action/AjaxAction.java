@@ -7,9 +7,9 @@ public class AjaxAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
 	private String ajaxMessage;
+	private String userLangCd;
 	
 	public String setLangChoice() {
-		String userLangCd = request.getParameter("userLangCd");
 		log.debug("set Lang Choice: language = " + userLangCd);
 		AdminDao dao = new AdminDao(MyBatisConfig.getSqlSessionFactory());
 		String userLangNm = dao.selLangNm(userLangCd);
@@ -28,6 +28,16 @@ public class AjaxAction extends BaseAction {
 	}
 	public void setAjaxMessage(String ajaxMessage) {
 		this.ajaxMessage = ajaxMessage;
+	}
+
+
+	public String getUserLangCd() {
+		return userLangCd;
+	}
+
+
+	public void setUserLangCd(String userLangCd) {
+		this.userLangCd = userLangCd;
 	}
 
 }

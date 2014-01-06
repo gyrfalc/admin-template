@@ -71,4 +71,9 @@ public class FabricFamily extends BaseModel implements IListItem {
 		this.fabricFamilyDesc = fabricFamilyDesc;
 	}
 
+	@Override
+	public boolean isLangEnabled() {
+		return true;
+	}
+
 }

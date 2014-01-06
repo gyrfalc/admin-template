@@ -314,7 +314,7 @@
                 <logfile.folder>C:/Users/Merle/Logs</logfile.folder>
                 <log.root.level>warn</log.root.level>
                 <log.app.level>debug</log.app.level>
-                <log.sql.level>warn</log.sql.level>
+                <log.sql.level>debug</log.sql.level>
                 <stdout.threshold>debug</stdout.threshold>
                 <log.email.address></log.email.address>
 			</properties>
