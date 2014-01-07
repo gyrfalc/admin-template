@@ -26,7 +26,15 @@
 			<interceptor-ref name="basicStack"/>
 		</action>
 		
+		<action name="list/*" class="com.csc.admin.action.AdminListAction" method="execute">
+			<param name="tblNm">{1}</param>
+			<result name="success">/WEB-INF/content/list.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+		</action>
+		
 	</package>
+	
 	
 	
 	<package name="fabric" namespace="/fabric" extends="struts-default">

@@ -59,7 +59,11 @@
    		<appender-ref ref="stdout"/>
     	<appender-ref ref="file"/>
      </logger>
-    	
+    <logger name="com.mchange" additivity="false">
+    	<level value="warn" />
+   		<appender-ref ref="stdout"/>
+    	<appender-ref ref="file"/>
+     </logger>     
 	<root>
 		<priority value="${log.root.level}"></priority>
 		<appender-ref ref="stdout"/>

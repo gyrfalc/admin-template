@@ -363,7 +363,7 @@
 		<taglibs.version>1.1.2</taglibs.version>
 		<jstl.version>1.2</jstl.version>
 		<mybatis.version>3.0.2</mybatis.version>
-		<c3p0.version>0.9.1</c3p0.version>
+		<c3p0.version>0.9.1.2</c3p0.version>
 		<cglib.version>2.2</cglib.version>
 		<displaytag.version>1.2</displaytag.version>
 		<lowagie.itext.version>2.1.7</lowagie.itext.version>
