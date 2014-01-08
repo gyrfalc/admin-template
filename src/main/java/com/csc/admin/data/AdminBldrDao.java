@@ -1,4 +1,4 @@
-package com.csc.admin.data.dao;
+package com.csc.admin.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.csc.admin.data.DataSource;
 import com.csc.admin.model.AdminCol;
 import com.csc.admin.model.AdminNotice;
 import com.csc.admin.model.AdminParam;
 import com.csc.admin.model.AdminTbl;
+import com.csc.admin.model.ListItem;
 
 public class AdminBldrDao implements IAdminBldrDao {
 
@@ -28,7 +28,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminTbl> list = new ArrayList<AdminTbl>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, dspl_nm, short_desc, view_ind, view_nm, lang_ind, sort_ind");
+		sql.append(" select tbl_nm, dspl_nm, short_desc, view_ind, view_nm, lang_ind, lang_col_nm, sort_ind");
 		sql.append(" from admin_tbl");
 		sql.append(" order by dspl_nm");
 		
@@ -47,6 +47,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				tbl.setViewInd(rs.getString("view_ind"));
 				tbl.setViewNm(rs.getString("view_nm"));
 				tbl.setLangInd(rs.getString("lang_ind"));
+				tbl.setLangColNm(rs.getString("lang_col_nm"));
 				tbl.setSortInd(rs.getString("sort_ind"));
 								
 				list.add(tbl);
@@ -81,7 +82,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		AdminTbl tbl = new AdminTbl();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, dspl_nm, short_desc, view_ind, view_nm, lang_ind, sort_ind");
+		sql.append(" select tbl_nm, dspl_nm, short_desc, view_ind, view_nm, lang_ind, lang_col_nm, sort_ind");
 		sql.append(" from admin_tbl");
 		sql.append(" where tbl_nm = ?");
 		
@@ -99,6 +100,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				tbl.setViewInd(rs.getString("view_ind"));
 				tbl.setViewNm(rs.getString("view_nm"));
 				tbl.setLangInd(rs.getString("lang_ind"));
+				tbl.setLangColNm(rs.getString("lang_col_nm"));
 				tbl.setSortInd(rs.getString("sort_ind"));
 			}
 			
@@ -457,6 +459,51 @@ public class AdminBldrDao implements IAdminBldrDao {
 		log.debug("get admin notice list");
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<ListItem> getList(String listViewNm) {
+		log.debug("get list for name = " + listViewNm);
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		ArrayList<ListItem> list = new ArrayList<ListItem>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select id, name from ").append(listViewNm);
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.createStatement();
+			log.debug(sql.toString());
+			rs = statement.executeQuery(sql.toString());
+			
+			while (rs.next()) {
+				ListItem lang = new ListItem();
+				lang.setId(rs.getString("id"));
+				lang.setName(rs.getString("name"));
+								
+				list.add(lang);
+			}
+			
+		} catch (Exception e) {
+			log.error("failed to get list", e);
+		} finally {
+			if (rs != null) {
+				try { rs.close(); } catch (Exception e) {}
+			}
+			
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return list;
+
 	}
 
 }

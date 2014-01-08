@@ -7,6 +7,7 @@ public class AdminTbl {
 	private String viewInd;
 	private String viewNm;
 	private String langInd;
+	private String langColNm;
 	private String sortInd;
 	
 	public boolean hasView() {
@@ -61,6 +62,12 @@ public class AdminTbl {
 	}
 	public void setSortInd(String sortInd) {
 		this.sortInd = sortInd;
+	}
+	public String getLangColNm() {
+		return langColNm;
+	}
+	public void setLangColNm(String langColNm) {
+		this.langColNm = langColNm;
 	}
 
 }

@@ -30,7 +30,7 @@ class MySQLAccess {
 	public void testSrchSql() {
 		try {
 			SqlBuilder bldr = new SqlBuilder();
-			System.out.println(bldr.buildTblSrchSql("fabric"));
+			System.out.println(bldr.buildRowListSql("fabric"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

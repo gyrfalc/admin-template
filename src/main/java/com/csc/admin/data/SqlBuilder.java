@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.csc.admin.data.dao.AdminBldrDao;
 import com.csc.admin.model.AdminCol;
 import com.csc.admin.model.AdminTbl;
 
@@ -14,13 +13,13 @@ public class SqlBuilder {
 	private AdminBldrDao dao = new AdminBldrDao();
 	private static final Logger log = Logger.getLogger(SqlBuilder.class);
 	
-	public String buildTblSrchSql(String tblNm) {
+	public String buildRowListSql(String tblNm, String langCd) {
 		AdminTbl tbl = dao.getTable(tblNm);
-		return buildTblSrchSql(tbl);
+		return buildRowListSql(tbl, langCd);
 	}
 	
-	public String buildTblSrchSql(AdminTbl tbl) {
-		log.debug("build search sql for table = " + tbl.getTblNm() );
+	public String buildRowListSql(AdminTbl tbl, String langCd) {
+		log.debug("build row list sql for table = " + tbl.getTblNm() );
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select ");
@@ -37,6 +36,12 @@ public class SqlBuilder {
 			sql.append(" from ").append(tbl.getViewNm());
 		} else {
 			sql.append(" from ").append(tbl.getTblNm());
+		}
+		
+		if (tbl.hasLang()) {
+			sql.append(" where ");
+			sql.append(tbl.getLangColNm());
+			sql.append(" = '").append(langCd).append("'");
 		}
 		
 		if (tbl.hasSortCols()) {

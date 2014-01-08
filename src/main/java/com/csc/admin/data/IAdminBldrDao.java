@@ -1,4 +1,4 @@
-package com.csc.admin.data.dao;
+package com.csc.admin.data;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import com.csc.admin.model.AdminCol;
 import com.csc.admin.model.AdminNotice;
 import com.csc.admin.model.AdminParam;
 import com.csc.admin.model.AdminTbl;
+import com.csc.admin.model.ListItem;
 
 public interface IAdminBldrDao {
 	
@@ -22,4 +23,6 @@ public interface IAdminBldrDao {
 	public AdminParam getAdminParam(String paramNm);
 	
 	public List<AdminNotice> getNoticeList();
+	
+	public List<ListItem> getList(String listViewNm);
 }

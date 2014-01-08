@@ -10,6 +10,7 @@ create table admin_tbl (
 	view_ind varchar(1) not null,
 	view_nm varchar(50),
 	lang_ind varchar(1),
+	lang_col_nm varchar(30),
 	sort_ind varchar(1),
 	constraint pk_admin_tbl primary key (tbl_nm)
 );

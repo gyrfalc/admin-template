@@ -1,6 +1,6 @@
 insert into admin_tbl(tbl_nm, dspl_nm, short_desc, view_ind, view_nm, 
-lang_ind, sort_ind)
-values('fabric','Fabric','Fabric short description','N',null,'Y','Y');
+lang_ind, lang_col_nm, sort_ind)
+values('fabric','Fabric','Fabric short description','N',null,'Y','lang_cd','Y');
 commit;
 
 

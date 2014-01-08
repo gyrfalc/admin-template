@@ -1,26 +1,15 @@
 package com.csc.admin.action;
 
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-import org.apache.struts2.interceptor.ParameterAware;
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
-import org.apache.struts2.interceptor.SessionAware;
-
+import com.csc.admin.data.AdminBldrDao;
 import com.csc.admin.data.SqlBuilder;
 import com.csc.admin.data.SqlRunner;
-import com.csc.admin.data.dao.AdminBldrDao;
 import com.csc.admin.model.AdminCol;
 import com.csc.admin.model.AdminRow;
 import com.csc.admin.model.AdminTbl;
-import com.opensymphony.xwork2.ActionSupport;
 
-public class AdminListAction extends ActionSupport  implements SessionAware, ParameterAware, ServletRequestAware, ServletResponseAware{
+public class AdminListAction extends AdminAction {
 
 	private static final long serialVersionUID = 1L;
 	private String tblNm;
@@ -32,32 +21,6 @@ public class AdminListAction extends ActionSupport  implements SessionAware, Par
 	private SqlRunner sqlRunner = new SqlRunner();
 	private AdminBldrDao dao = new AdminBldrDao();
 	
-	private static final Logger log = Logger.getLogger(AdminListAction.class);
-
-	@Override
-	public void setServletResponse(HttpServletResponse arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setServletRequest(HttpServletRequest arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setParameters(Map<String, String[]> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public String execute() throws Exception {
 		log.debug("entering execute action... ");
 		// retrieve table
@@ -65,7 +28,7 @@ public class AdminListAction extends ActionSupport  implements SessionAware, Par
 		// get list of columns to display on search table
 		colnmlist = dao.getColSrchList(tblNm);
 		// get sql to retrieve those columns
-		String sql = sqlBuilder.buildTblSrchSql(tblNm);
+		String sql = sqlBuilder.buildRowListSql(tblNm, super.getLangCd());
 		// execute sql to retrieve row data
 		rowlist = sqlRunner.executeListSql(colnmlist, sql);
 		
