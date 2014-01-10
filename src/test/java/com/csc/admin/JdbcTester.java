@@ -17,7 +17,7 @@ public class JdbcTester {
 		MySQLAccess dao = new MySQLAccess();
 		//dao.readDataBase();
 		//dao.testC3P0() ;
-		dao.testSrchSql();
+		//dao.testSrchSql();
 	}
 }
 
@@ -30,7 +30,7 @@ class MySQLAccess {
 	public void testSrchSql() {
 		try {
 			SqlBuilder bldr = new SqlBuilder();
-			System.out.println(bldr.buildRowListSql("fabric"));
+			//System.out.println(bldr.buildRowListSql("fabric","en"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

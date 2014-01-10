@@ -32,6 +32,30 @@
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
 		</action>
+
+		<action name="view/*" class="com.csc.admin.action.AdminViewAction" method="viewRecord">
+			<param name="tblNm">{1}</param>
+			<result name="success">/WEB-INF/content/view.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+		</action>
+		<action name="saved" class="com.csc.admin.action.AdminViewAction" method="viewRecord">
+			<result name="success">/WEB-INF/content/view.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+		</action>
+		<action name="edit/*" class="com.csc.admin.action.AdminViewAction" method="editRecord">
+			<param name="tblNm">{1}</param>
+			<result name="success">/WEB-INF/content/edit.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+		</action>
+		<action name="upd/*" class="com.csc.admin.action.AdminViewAction" method="updRecord">
+			<param name="tblNm">{1}</param>
+			<result name="success">/WEB-INF/content/view.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+		</action>
 		
 	</package>
 	

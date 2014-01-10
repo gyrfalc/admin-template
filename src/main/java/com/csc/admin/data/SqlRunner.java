@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.csc.admin.model.AdminCol;
 import com.csc.admin.model.AdminRow;
+import com.csc.admin.util.AdminConstants;
 
 public class SqlRunner {
 	private static final Logger log = Logger.getLogger(SqlRunner.class);
@@ -30,6 +31,8 @@ public class SqlRunner {
 			while (rs.next()) {
 				ArrayList<AdminCol> collist = new ArrayList<AdminCol>();
 				
+				String keyVal = rs.getString(AdminConstants.KEY_NAME);
+				
 				for (AdminCol col : cols) {
 					
 					AdminCol mycol = col.clone();
@@ -49,8 +52,7 @@ public class SqlRunner {
 					collist.add(mycol);
 				}
 				
-				AdminRow row = new AdminRow();
-				row.setColList(collist);
+				AdminRow row = new AdminRow(keyVal, collist);
 				
 				rowlist.add(row);
 				
@@ -73,6 +75,64 @@ public class SqlRunner {
 		}
 		
 		return rowlist;
+	}
+	
+	public AdminRow executeSelSql(List<AdminCol> selcols, String sql) {
+		log.debug("execute select sql...");
+		log.debug(sql);
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		ArrayList<AdminCol> collist = null;
+		AdminRow row = null;
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.createStatement();
+			rs = statement.executeQuery(sql);
+			
+			
+			//should only retrieve one row.  this is not meant as a search
+			if (rs.next()) {
+				String keyVal = rs.getString(AdminConstants.KEY_NAME);			
+				collist = new ArrayList<AdminCol>();
+				for (AdminCol col : selcols) {
+					AdminCol mycol = col.clone();
+					if (col.getDataType().equals("char")) {
+						mycol.setValString(rs.getString(col.getColNm()));
+					} else if (col.getDataType().equals("int")) {
+						mycol.setValInt(rs.getInt(col.getColNm()));
+					} else if (col.getDataType().equals("date")) {
+						mycol.setValDate(rs.getDate(col.getColNm()));
+					} else if (col.getDataType().equals("dbl")) {
+						mycol.setValDouble(rs.getDouble(col.getColNm()));
+					} else {
+						throw new Exception("Invalid column data type: " + col.getDataType());
+					}
+					collist.add(mycol);
+				}
+				row = new AdminRow(keyVal, collist);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			log.error("failed to execute select SQL", e);
+		} finally {
+			if (rs != null) {
+				try { rs.close(); } catch (Exception e) {}
+			}
+			
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return row;	
 	}
 
 }

@@ -9,6 +9,8 @@ public class AdminTbl {
 	private String langInd;
 	private String langColNm;
 	private String sortInd;
+	private String urlNm;
+	private String surrogateKeyNm;
 	
 	public boolean hasView() {
 		return "Y".equalsIgnoreCase(viewInd);
@@ -68,6 +70,18 @@ public class AdminTbl {
 	}
 	public void setLangColNm(String langColNm) {
 		this.langColNm = langColNm;
+	}
+	public String getUrlNm() {
+		return urlNm;
+	}
+	public void setUrlNm(String urlNm) {
+		this.urlNm = urlNm;
+	}
+	public String getSurrogateKeyNm() {
+		return surrogateKeyNm;
+	}
+	public void setSurrogateKeyNm(String surrogateKeyNm) {
+		this.surrogateKeyNm = surrogateKeyNm;
 	}
 
 }

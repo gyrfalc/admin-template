@@ -14,7 +14,7 @@ public class AdminListAction extends AdminAction {
 	private static final long serialVersionUID = 1L;
 	private String tblNm;
 	private List<AdminRow> rowlist;
-	private List<AdminCol> colnmlist;
+	private List<AdminCol> collist;
 	private AdminTbl tbl;
 	
 	private SqlBuilder sqlBuilder = new SqlBuilder();
@@ -26,11 +26,13 @@ public class AdminListAction extends AdminAction {
 		// retrieve table
 		tbl = dao.getTable(tblNm);
 		// get list of columns to display on search table
-		colnmlist = dao.getColSrchList(tblNm);
+		collist = dao.getColSrchList(tblNm);
+		// get list or sort columns
+		List<AdminCol> sortcols = dao.getColSortList(tblNm);
 		// get sql to retrieve those columns
-		String sql = sqlBuilder.buildRowListSql(tblNm, super.getLangCd());
+		String sql = sqlBuilder.buildRowListSql(tbl, collist, sortcols, super.getLangCd());
 		// execute sql to retrieve row data
-		rowlist = sqlRunner.executeListSql(colnmlist, sql);
+		rowlist = sqlRunner.executeListSql(collist, sql);
 		
 		log.debug("leaving execute action...");
 		return SUCCESS;
@@ -60,12 +62,12 @@ public class AdminListAction extends AdminAction {
 		this.tbl = tbl;
 	}
 
-	public List<AdminCol> getColnmlist() {
-		return colnmlist;
+	public List<AdminCol> getCollist() {
+		return collist;
 	}
 
-	public void setColnmlist(List<AdminCol> colnmlist) {
-		this.colnmlist = colnmlist;
+	public void setCollist(List<AdminCol> colnmlist) {
+		this.collist = colnmlist;
 	}
 
 

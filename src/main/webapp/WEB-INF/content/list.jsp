@@ -14,7 +14,8 @@
 				<table id="model-list">
 					<thead>
 						<tr>
-							<s:iterator value="colnmlist">
+							<th>ID</th>
+							<s:iterator value="collist">
 								<th><s:property value="dsplNm"/></th>
 							</s:iterator>
 						</tr>
@@ -22,6 +23,9 @@
 					<tbody>
 						<s:iterator value="rowlist">
 						<tr>
+							<td>
+								<a href="<c:url value="/view/"/>${tbl.urlNm}?keyVal=${keyVal}"><s:property value="keyVal"/></a>
+							</td>
 							<s:iterator value="collist">
 								<td><s:property value="val" escape="false"/></td>
 							</s:iterator>

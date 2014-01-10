@@ -1,8 +1,18 @@
 package com.csc.admin.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.csc.admin.util.AdminConstants;
 
 public class AdminCol {
+	private static final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+	
+	/* ================================================================= */
+	/* if you add a new property, be sure and add it to the clone method */
 	private String tblNm;
 	private String colNm;
 	private String dsplNm;
@@ -17,19 +27,92 @@ public class AdminCol {
 	private String metaType;
 	private String renderType;
 	private String renderParams;
+	private String colDesc;
+	private int maxLen;
+	/* if you add a new property, be sure and add it to the clone method */
+	/* ================================================================= */
 	
 	private Date valDate;
 	private String valString;
 	private Integer valInt;
 	private Double valDouble;
 	
+	private Map<String,String> renderMap;
+	private boolean renderMapBuilt = false;
+	
+	private void buildRenderMap() {
+		// render params are expected to be comma separated name-value pairs:
+		// name1=val1,name2=val2,...
+		if (!renderMapBuilt) {
+			renderMap = new HashMap<String,String>();
+			
+			if (renderParams != null && renderParams.length() > 0) {
+				String[] params = renderParams.split(",");
+				for (String p : params) {
+					String[] pair = p.split("=");
+					renderMap.put(pair[0].trim(), pair[1].trim());
+				}
+			}
+			
+			renderMapBuilt = true;
+		}
+	}
+	
+	public String getCssClass() {
+		buildRenderMap();
+		if (renderMap.containsKey(AdminConstants.RENDER_PARAM_CSS)) { return renderMap.get(AdminConstants.RENDER_PARAM_CSS); }
+		else return "";
+	}
+	public boolean isMeta() {
+		return "Y".equalsIgnoreCase(this.metaInd);
+	}
+	public boolean isHtml() {
+		buildRenderMap();
+		return (renderMap.containsKey(AdminConstants.RENDER_PARAM_HTML));
+	}
+	public boolean isList() {
+		return AdminConstants.RENDER_TYPE_LIST.equals(this.renderType);
+	}
+	public String getListNm() {
+		buildRenderMap();
+		return (renderMap.get(AdminConstants.RENDER_PARAM_LIST_NM));
+	}
+	
+	public String buildWhereClause() {
+		if (dataType.equals(AdminConstants.DATA_TYPE_STRING)) { return colNm + " = '" + valString + "'"; }
+		else if (dataType.equals(AdminConstants.DATA_TYPE_DATE)) { return colNm + " = '" + formatter.format(valDate) + "'"; }
+		else if (dataType.equals(AdminConstants.DATA_TYPE_INT)) { return colNm + " = " + valInt.toString(); }
+		else if (dataType.equals(AdminConstants.DATA_TYPE_DBL)) { return colNm + " = " + valDouble.toString(); }
+		else return null;		
+	}
+	
 	public String getVal() {
-		if (dataType.equals("char")) { return valString; }
-		if (dataType.equals("date")) { return valDate.toString(); }
-		if (dataType.equals("int")) { return valInt.toString(); }
-		if (dataType.equals("dbl")) { return valDouble.toString(); }
+		if (dataType.equals(AdminConstants.DATA_TYPE_STRING)) { return valString; }
+		else if (dataType.equals(AdminConstants.DATA_TYPE_DATE)) { 
+			return formatter.format(valDate); 
+		}
+		else if (dataType.equals(AdminConstants.DATA_TYPE_INT)) { return valInt.toString(); }
+		else if (dataType.equals(AdminConstants.DATA_TYPE_DBL)) { return valDouble.toString(); }
+		else return null;
+	}
+	
+	public void setVal(Integer val) { valInt = val;	}
+	public void setVal(Double val) { valDouble = val; }
+	public void setVal(Date val) { valDate = val; }
+	
+	
+	public void setVal(String val) {
+		if (dataType.equals(AdminConstants.DATA_TYPE_STRING)) { valString = val; }
+		else if (dataType.equals(AdminConstants.DATA_TYPE_DATE)) { 
+			try {
+				valDate = formatter.parse(val);
+			} catch (ParseException e) {
+				valDate = null;
+			}
+		}
+		else if (dataType.equals(AdminConstants.DATA_TYPE_INT)) { valInt = new Integer(val); }
+		else if (dataType.equals(AdminConstants.DATA_TYPE_DBL)) { valDouble = new Double(val); }
 		
-		return null;
 	}
 	
 	public AdminCol clone() {
@@ -48,7 +131,8 @@ public class AdminCol {
 		col.setMetaType(this.getMetaType());
 		col.setRenderType(this.getRenderType());
 		col.setRenderParams(this.getRenderParams());
-		
+		col.setColDesc(this.getColDesc());
+		col.setMaxLen(this.getMaxLen());
 		return col;
 	}
 	
@@ -159,5 +243,21 @@ public class AdminCol {
 	}
 	public void setValDouble(Double valDouble) {
 		this.valDouble = valDouble;
+	}
+
+	public String getColDesc() {
+		return colDesc;
+	}
+
+	public void setColDesc(String colDesc) {
+		this.colDesc = colDesc;
+	}
+
+	public int getMaxLen() {
+		return maxLen;
+	}
+
+	public void setMaxLen(int maxLen) {
+		this.maxLen = maxLen;
 	}
 }
