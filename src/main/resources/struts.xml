@@ -31,6 +31,7 @@
 			<result name="success">/WEB-INF/content/list.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
 		</action>
 
 		<action name="view/*" class="com.csc.admin.action.AdminViewAction" method="viewRecord">
@@ -38,23 +39,41 @@
 			<result name="success">/WEB-INF/content/view.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
 		</action>
 		<action name="saved" class="com.csc.admin.action.AdminViewAction" method="viewRecord">
 			<result name="success">/WEB-INF/content/view.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
 		</action>
 		<action name="edit/*" class="com.csc.admin.action.AdminViewAction" method="editRecord">
 			<param name="tblNm">{1}</param>
 			<result name="success">/WEB-INF/content/edit.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
+		</action>
+		<action name="new/*" class="com.csc.admin.action.AdminViewAction" method="addRecord">
+			<param name="tblNm">{1}</param>
+			<result name="success">/WEB-INF/content/add.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
 		</action>
 		<action name="upd/*" class="com.csc.admin.action.AdminViewAction" method="updRecord">
 			<param name="tblNm">{1}</param>
 			<result name="success">/WEB-INF/content/view.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
+		</action>
+		<action name="ins/*" class="com.csc.admin.action.AdminViewAction" method="insRecord">
+			<param name="tblNm">{1}</param>
+			<result name="success">/WEB-INF/content/view.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
 		</action>
 		
 	</package>

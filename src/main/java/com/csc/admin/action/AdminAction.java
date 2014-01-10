@@ -16,7 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.csc.admin.data.AdminBldrDao;
+import com.csc.admin.model.AdminTbl;
 import com.csc.admin.model.ListItem;
+import com.csc.admin.util.AdminConstants;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class AdminAction  extends ActionSupport  implements SessionAware, ParameterAware, ServletRequestAware, ServletResponseAware {
@@ -34,6 +36,8 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 	
 	protected String userNm;
 	protected String id;
+	protected AdminBldrDao metadao = new AdminBldrDao();
+	
 	
 	@Override
 	public void setServletResponse(HttpServletResponse response) {
@@ -55,10 +59,10 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 		this.session = session;
 	}
 	
-	public Integer getSessionUserId() {
-		Integer userId = (Integer) session.get("userId");
+	public String getSessionUserId() {
+		String userId = (String) session.get("userId");
 		if (userId == null) {
-			userId = 0;
+			userId = "0";
 		}
 		return userId;
 		
@@ -155,8 +159,7 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 		List<ListItem> list = (List<ListItem>) session.get("lang-list");
 		if (list == null || list.size() == 0) {
 			try {
-				AdminBldrDao adao = new AdminBldrDao();
-				list = adao.getList("lst_language");
+				list = metadao.getList("lst_language");
 				if (list.size() == 0) {
 					list = this.buildMinimalLangList();
 				}
@@ -174,6 +177,22 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 	
 	public void setLangList(List<ListItem> list) {
 		session.put("lang-list", list);		
+	}
+	
+	public List<AdminTbl> getTblList() {
+		@SuppressWarnings("unchecked")
+		List<AdminTbl> tblList = (List<AdminTbl>) session.get(AdminConstants.SESSION_VAR_TBL_LIST);
+		
+		if (tblList == null) {
+			tblList = metadao.getTableList();
+			setTblList(tblList);
+		}
+		
+		return tblList;
+		
+	}
+	public void setTblList(List<AdminTbl> tblList) {
+		session.put(AdminConstants.SESSION_VAR_TBL_LIST, tblList);
 	}
 	
 

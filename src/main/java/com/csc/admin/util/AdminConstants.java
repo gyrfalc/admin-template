@@ -24,5 +24,9 @@ public class AdminConstants {
 	public static final String META_TYPE_INS_DT = "insdt";
 	public static final String META_TYPE_RECORD_STAT_DT = "recstatdt";
 	public static final String META_TYPE_RECORD_STAT = "recstat";
+	
+	public static final String SESSION_VAR_TBL_LIST = "tbl-list";
+	public static final String SESSION_VAR_LANG_LIST = "lang-list";
+	
 
 }

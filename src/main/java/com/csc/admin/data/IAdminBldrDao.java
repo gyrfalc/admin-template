@@ -18,6 +18,7 @@ public interface IAdminBldrDao {
 	public List<AdminCol> getColSrchList(String tblNm);
 	public List<AdminCol> getColKeyList(String tblNm);
 	public List<AdminCol> getColMetaList(String tblNm);
+	public List<AdminCol> getColUpdList(String tblNm);
 	public AdminCol getCol(String tblNm, String colNm);
 	
 	public AdminParam getAdminParam(String paramNm);

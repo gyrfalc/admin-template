@@ -1,6 +1,11 @@
 package com.csc.admin.model;
 
-public class AdminTbl {
+import java.io.Serializable;
+
+public class AdminTbl implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private String tblNm;
 	private String dsplNm;
 	private String shortDesc;
@@ -11,6 +16,9 @@ public class AdminTbl {
 	private String sortInd;
 	private String urlNm;
 	private String surrogateKeyNm;
+	private String instrAdd;
+	private String instrEdit;
+	private String instrDel;
 	
 	public boolean hasView() {
 		return "Y".equalsIgnoreCase(viewInd);
@@ -82,6 +90,24 @@ public class AdminTbl {
 	}
 	public void setSurrogateKeyNm(String surrogateKeyNm) {
 		this.surrogateKeyNm = surrogateKeyNm;
+	}
+	public String getInstrAdd() {
+		return instrAdd;
+	}
+	public void setInstrAdd(String instrAdd) {
+		this.instrAdd = instrAdd;
+	}
+	public String getInstrEdit() {
+		return instrEdit;
+	}
+	public void setInstrEdit(String instrEdit) {
+		this.instrEdit = instrEdit;
+	}
+	public String getInstrDel() {
+		return instrDel;
+	}
+	public void setInstrDel(String instrDel) {
+		this.instrDel = instrDel;
 	}
 
 }

@@ -5,4 +5,6 @@
                                      APP   H E A D E R
 ======================================================================================================
 --%>
-<h1 id="header">SafeSPEC US Chem Data Administration</h1>
+<div id="banner">
+	<h1><s:text name="banner.title"/></h1>
+</div>

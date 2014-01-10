@@ -55,22 +55,29 @@ public class SqlBuilder {
 		
 	}
 	
-
-	public String buildSelSql(AdminTbl tbl, String keyVal, List<AdminCol> selcols, List<AdminCol> keycols, String langCd) {
-		log.debug("build select sql for table = " + tbl.getTblNm() );
-		
+	private void parseKeyVals(String keyval, List<AdminCol> keycols) {
+		log.debug("parseKeyVals for key = " + keyval);
 		// assign the key value
 		// if we have more than one key, the key val is delimited and must be split
 		// data type handling is done in the AdminCol object
 		if (keycols.size() > 1) {
-			String[] keyvals = keyVal.split(AdminConstants.KEY_DELIMITER);
+			String[] keyvals = keyval.split(AdminConstants.KEY_DELIMITER);
 			for (int i = 0; i < keycols.size(); i++ ) {
 				keycols.get(i).setVal(keyvals[i]);
 			}
 		} else {
-			keycols.get(0).setVal(keyVal);
+			keycols.get(0).setVal(keyval);
 		}
-				
+						
+	}
+	
+
+	public String buildSelSql(AdminTbl tbl, String keyval, List<AdminCol> selcols, List<AdminCol> keycols, String langCd) {
+		log.debug("build select sql for table = " + tbl.getTblNm() );
+		
+		parseKeyVals(keyval, keycols);
+		
+
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select ").append(tbl.getSurrogateKeyNm()).append(" as id");
 		
@@ -101,11 +108,8 @@ public class SqlBuilder {
 			sql.append(" = '").append(langCd).append("'");
 		}
 		
-
-		
 		return sql.toString();
 			
-		
 	}
 	
 	private String buildColVal(String val, String dataType) {
@@ -120,11 +124,13 @@ public class SqlBuilder {
 	
 	public String buildUpdSql(
 			AdminTbl tbl, 
+			String keyval,
 			List<AdminCol> updcols, 
 			List<AdminCol> metacols, 
 			List<AdminCol> keycols, 
-			Map<String,String> data,
-			String userId) 
+			Map<String,String[]> data,
+			String userId,
+			String langCd) 
 	{
 		StringBuilder sql = new StringBuilder();
 		
@@ -133,25 +139,86 @@ public class SqlBuilder {
 		boolean first = true;
 		for (AdminCol u : updcols) {
 			if (!first) { sql.append(", "); }
-			sql.append(u.getColNm()).append(" = ").append(buildColVal(data.get(u.getColNm()), u.getDataType()));
+			sql.append(u.getColNm()).append(" = ").append(buildColVal(data.get(u.getColNm())[0], u.getDataType()));
 			first = false;
 		}
 		// set the metadata fields
 		for (AdminCol m : metacols) {
 			if (AdminConstants.META_TYPE_UPD_USER.equals(m.getMetaType())) {
-				if (AdminConstants.DATA_TYPE_STRING.equals(m.getDataType())) {
-					sql.append(", ").append(m.getColNm()).append(" = '").append(userId).append("'");
-				} else {
-					sql.append(", ").append(m.getColNm()).append(" = ").append(userId);
-				}
-				
+				sql.append(", ").append(m.getColNm()).append(" = ").append(buildColVal(userId, m.getDataType()));
 			}
+			//TODO add meta dates to update
+			
+			//TODO add pub status and dates to update
 		}
 		
 		// add the where clause
+		parseKeyVals(keyval, keycols);
+		sql.append(" where ");
+		first = true;
+		for (AdminCol k : keycols) {
+			if (!first) { sql.append(" and "); }
+			sql.append(k.buildWhereClause());
+			first = false;
+		}
 		
+		// add language 
+		if (tbl.hasLang()) {
+			sql.append(" and ").append(tbl.getLangColNm()).append(" = '").append(langCd).append("'");
+		}
 		
 		return sql.toString();
 	}
+	
+	public String buildInsSql(
+			AdminTbl tbl, 
+			List<AdminCol> inscols, 
+			Map<String,String[]> data,
+			String userId,
+			String langCd) 
+	{
+		StringBuilder sql = new StringBuilder();
+		
+		//TODO need to handle auto-generated keys
+		
+		//build the insert set clause for all fields
+		sql.append(" insert into ").append(tbl.getTblNm()).append(" (");
+		boolean first = true;
+		for (AdminCol i : inscols) {
+			if (!first) { sql.append(", "); }
+			sql.append(i.getColNm());
+			first = false;
+		}
+		sql.append(" ) values (");
+		first = true;
+		for (AdminCol i : inscols) {
+			if (!first) { sql.append(", "); }
+			if (i.isMeta()) {
+				if (AdminConstants.META_TYPE_LANG.equals(i.getMetaType())) {
+					sql.append(buildColVal(langCd, i.getDataType()));
+				}
+				else if (AdminConstants.META_TYPE_INS_USER.equals(i.getMetaType())) {
+					sql.append(buildColVal(userId, i.getDataType()));
+				} 
+				else if (AdminConstants.META_TYPE_UPD_USER.equals(i.getMetaType())) {
+					sql.append(buildColVal(userId, i.getDataType()));
+				} else {
+					sql.append("null");
+				}
+				//TODO add meta dates to insert, read format from property file
+				
+				//TODO add pub status and dates to insert
+			} else {
+				sql.append(buildColVal(data.get(i.getColNm())[0], i.getDataType()));
+			}
+			
+			first = false;
+		}
+		sql.append(")");
+		
+		return sql.toString();
+		
+
+	}	
 
 }

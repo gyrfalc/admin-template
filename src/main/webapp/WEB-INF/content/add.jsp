@@ -3,10 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>${tbl.dsplNm} - Edit</title>
+	<title>${tbl.dsplNm} - Add</title>
 	<script src="<c:url value="/ckeditor/ckeditor.js" />"></script>
 	<script src="<c:url value="/ckeditor/adapters/jquery.js" />"></script>
 </head>
+<body>
 	<jsp:include page="/common/page-header.jsp"/>	
 	
 	<table style="border-collapse: collapse; width: 100%;"><tr>
@@ -16,23 +17,31 @@
 	<td style="vertical-align: top">
 	
 	<div class="content" style="margin: 0">
-		<h3 class="page-caption">${tbl.dsplNm} (Edit)</h3>
-		<jsp:include page="/common/menu-edit.jsp"/>	
+		<h3 class="page-caption">${tbl.dsplNm} (Add)</h3>
+		<jsp:include page="/common/menu-add.jsp"/>	
+		
+		<div class="tbl-instr">${tbl.instrAdd }</div>
 
 		<div id="div-form-editor" class="sub-content">
-		<form id="frm-edit" action="<c:url value="/upd"/>/${tblNm}" method="post">
+		<form id="frm-edit" action="<c:url value="/ins"/>/${tblNm}" method="post">
 			<table class="form-layout">
+				<tr>
+					<td class="label" style="padding-top:25px">Language</td>
+					<td style="padding:0">
+						<ul class="clone-lang">
+							<li><input type="radio" name="model.cloneLang" value="Y" checked="checked"/>&nbsp;Create record in ${langNm} and clone to all other languages.</li>
+							<li><input type="radio" name="model.cloneLang" value="N" />&nbsp;Create record in ${langNm} only.</li>
+						</ul>					
+					</td>
+				</tr>
 				<s:iterator value="row.collist">
-				<s:if test="%{!isMeta() && renderType!='hidden'}">
+				<s:if test="%{!isMeta()}">
 				<tr>
 					<td class="label">
 						<s:property value="dsplNm"/>
 					</td>
 					<td>
-					<s:if test="%{isKey()}">
-						<%-- do not allow users to edit key values --%>
-						<s:property value="val"/>
-					</s:if><s:else>				
+				
 						<s:if test="%{renderType=='text'}" >
 							<input type="text" id="fld_${colNm}" name="${colNm}" value="<s:property value="val"/>" maxlength="${maxLen}" class="${cssClass}" />
 							<s:if test="html">
@@ -60,24 +69,21 @@
 								</s:iterator>
 							</select>
 						</s:if>
-					</s:else>
+					
 					</td>
 				</tr>		
 				</s:if>
 				</s:iterator>			
 			</table>
-				<input type="hidden" name="keyVal" value="${keyVal}" />
-			<s:iterator value="row.collist">
-				<s:if test="%{!isMeta() && renderType=='hidden'}">			
-					<input type="hidden" name="${colNm}" value="<s:property value="val"/>" />
-				</s:if>
-			</s:iterator>
+
 		</form>
 		</div>
 		<jsp:include page="/common/text-edit.jsp"/>
 	</div>
 	
 	</td>
-	</tr></table>	
+	</tr></table>
+			
+	
 </body>
 </html>

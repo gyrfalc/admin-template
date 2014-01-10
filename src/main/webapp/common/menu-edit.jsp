@@ -1,8 +1,9 @@
 <%@ include file="/common/taglibs.jsp"%>
+<s:url id="contextURL" value="/" includeParams="none"/>
 <div id="div-action-menu">
 	<ul class="menu-layout">
-		<li><a href="${baseURL}/list">cancel</a></li>	
-		<li><a href="#" onclick="resetForm()">undo</a></li>	
+		<li><a href="${contextURL}list/${tbl.urlNm}">cancel</a></li>	
+		<li><a href="#" onclick="resetForm(); return false;">undo</a></li>	
 		<li><a href="#" onclick="submitForm(); return false;">save</a></li>	
 	</ul>
 	
@@ -10,11 +11,11 @@
 	<script type="text/javascript">
 	
 		function resetForm() {
-			document.forms[0].reset();
+			$("#frm-edit").reset();
 		}
 		
 		function submitForm() {
-			document.forms[0].submit();
+			$("#frm-edit").submit();
 		}
 	
 	</script>

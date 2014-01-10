@@ -28,7 +28,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminTbl> list = new ArrayList<AdminTbl>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, dspl_nm, short_desc, view_ind, view_nm, lang_ind, lang_col_nm, sort_ind, url_nm, surrogate_key_nm");
+		sql.append(" select tbl_nm, dspl_nm, url_nm");
 		sql.append(" from admin_tbl");
 		sql.append(" order by dspl_nm");
 		
@@ -43,14 +43,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				
 				tbl.setTblNm(rs.getString("tbl_nm"));
 				tbl.setDsplNm(rs.getString("dspl_nm"));
-				tbl.setShortDesc(rs.getString("short_desc"));
-				tbl.setViewInd(rs.getString("view_ind"));
-				tbl.setViewNm(rs.getString("view_nm"));
-				tbl.setLangInd(rs.getString("lang_ind"));
-				tbl.setLangColNm(rs.getString("lang_col_nm"));
-				tbl.setSortInd(rs.getString("sort_ind"));
 				tbl.setUrlNm(rs.getString("url_nm"));
-				tbl.setSurrogateKeyNm(rs.getString("surrogate_key_nm"));
 								
 				list.add(tbl);
 			}
@@ -85,6 +78,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select tbl_nm, dspl_nm, short_desc, view_ind, view_nm, lang_ind, lang_col_nm, sort_ind, url_nm, surrogate_key_nm");
+		sql.append(", instr_add, instr_edit, instr_del");
 		sql.append(" from admin_tbl");
 		sql.append(" where tbl_nm = ?");
 		
@@ -106,6 +100,9 @@ public class AdminBldrDao implements IAdminBldrDao {
 				tbl.setSortInd(rs.getString("sort_ind"));
 				tbl.setUrlNm(rs.getString("url_nm"));
 				tbl.setSurrogateKeyNm(rs.getString("surrogate_key_nm"));
+				tbl.setInstrAdd(rs.getString("instr_add"));
+				tbl.setInstrEdit(rs.getString("instr_edit"));
+				tbl.setInstrDel(rs.getString("instr_del"));
 			}
 			
 		} catch (Exception e) {
@@ -265,7 +262,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select col_nm, sort_dir");
+		sql.append(" select col_nm, sort_ord, sort_dir");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and sort_ind = 'Y'");
@@ -281,12 +278,13 @@ public class AdminBldrDao implements IAdminBldrDao {
 			while (rs.next()) {
 				AdminCol col = new AdminCol();
 				col.setColNm(rs.getString("col_nm"));
-				col.setDataType(rs.getString("sort_dir"));
+				col.setSortOrd(rs.getInt("sort_ord"));
+				col.setSortDir(rs.getString("sort_dir"));
 				list.add(col);
 			}
 			
 		} catch (Exception e) {
-			log.error("failed to key columns for table = " + tblNm, e);
+			log.error("failed to get sort columns for table = " + tblNm, e);
 		} finally {
 			if (rs != null) {
 				try { rs.close(); } catch (Exception e) {}
@@ -303,6 +301,55 @@ public class AdminBldrDao implements IAdminBldrDao {
 		
 		return list;
 	}
+	
+	@Override
+	public List<AdminCol> getColUpdList(String tblNm) {
+		log.debug("get column update list for table = " + tblNm);
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select col_nm, data_type");
+		sql.append(" from admin_col");
+		sql.append(" where tbl_nm = ?");
+		sql.append(" and key_ind = 'N'");
+		sql.append(" and meta_ind = 'N'");
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.prepareStatement(sql.toString());
+			statement.setString(1, tblNm);
+			log.debug(sql.toString());
+			rs = statement.executeQuery();
+			
+			while (rs.next()) {
+				AdminCol col = new AdminCol();
+				col.setColNm(rs.getString("col_nm"));
+				col.setDataType(rs.getString("data_type"));
+				list.add(col);
+			}
+			
+		} catch (Exception e) {
+			log.error("failed to get update columns for table = " + tblNm, e);
+		} finally {
+			if (rs != null) {
+				try { rs.close(); } catch (Exception e) {}
+			}
+			
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return list;
+	}
+	
 	
 	@Override
 	public List<AdminCol> getColKeyList(String tblNm) {

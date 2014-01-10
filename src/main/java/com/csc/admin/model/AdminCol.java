@@ -63,6 +63,9 @@ public class AdminCol {
 		if (renderMap.containsKey(AdminConstants.RENDER_PARAM_CSS)) { return renderMap.get(AdminConstants.RENDER_PARAM_CSS); }
 		else return "";
 	}
+	public boolean isKey() {
+		return "Y".equalsIgnoreCase(this.keyInd);
+	}
 	public boolean isMeta() {
 		return "Y".equalsIgnoreCase(this.metaInd);
 	}

@@ -1,3 +1,4 @@
+<%@ include file="/common/taglibs.jsp"%>
 	
 	<div id="div-html-editor" title="HTML Editor">
             <textarea id="editor1" name="editor1" rows="10" cols="80">
@@ -5,18 +6,16 @@
             </textarea>	
             
             <p class="editor-buttons">
-            	<input type="button" value="Cancel" onclick="closeEditor()"/>
+            	<button onclick="closeEditor()"><s:text name="html.editor.cancel"/></button>
             	&nbsp;&nbsp;
-            	<input type="button" value="Save" onclick="saveEditor()" />
+            	<button onclick="saveEditor()"><s:text name="html.editor.save"/></button>
             	&nbsp;&nbsp;
-            	<input type="button" value="Save as Paragraph(s)" onclick="saveEditorP()" />
+            	<button onclick="saveEditorP()"><s:text name="html.editor.save.paragraph"/></button>
             
             </p>
             
             <p class="help-text">
-            	<strong>Important!</strong>  This HTML editor automatically puts paragraph tags around your
-            	data.  All paragraph tags will be REMOVED unless you specifically choose to save them
-            	by clicking on the "Save as Paragraph(s)" button.
+            	<s:text name="html.editor.warn"/>
             </p>
 	</div>
      <script>

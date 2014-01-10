@@ -134,5 +134,33 @@ public class SqlRunner {
 		
 		return row;	
 	}
+	
+	public int executeUpdSql(String sql) {
+		log.debug("execute update sql...");
+		log.debug(sql);
+		Connection conn = null;
+		Statement statement = null;
+		int retcount = 0;
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.createStatement();
+			retcount = statement.executeUpdate(sql);
+			
+		} catch (Exception e) {
+			log.error("failed to execute update SQL", e);
+		} finally {
+
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return retcount;	
+	}
 
 }

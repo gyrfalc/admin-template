@@ -1,7 +1,10 @@
 package com.csc.admin.model;
 
-public class ListItem implements IListItem {
-	
+import java.io.Serializable;
+
+public class ListItem implements IListItem, Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
 
