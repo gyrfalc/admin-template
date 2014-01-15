@@ -273,10 +273,16 @@
         	<version>1.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.10</version>
-		</dependency>		
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ddlutils</groupId>
+            <artifactId>ddlutils</artifactId>
+            <version>1.0</version>
+        </dependency>	
+			
 	</dependencies>
 
 
@@ -301,9 +307,7 @@
 
 		<profile>
 			<id>mysql</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>			
+					
 			<properties>
 				<env>dev</env>
 				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
@@ -322,17 +326,20 @@
 		
 		<profile>
 			<id>hsqldb</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>	
 			<properties>
 				<env>dev</env>
 				<jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
-                <jdbc.url>jdbc:hsqldb:file:adminbldr</jdbc.url>
-                <jdbc.username>SA</jdbc.username>
+                <jdbc.url>jdbc:hsqldb:res:/db/admindb</jdbc.url>
+                <jdbc.username>sa</jdbc.username>
                 <jdbc.password></jdbc.password>
                 <mailhost>mailhost</mailhost>
-                <logfile.folder>C:/Users/Merle/Logs</logfile.folder>
-                <log.root.level>warn</log.root.level>
+                <logfile.folder>C:/Logs</logfile.folder>
+                <log.root.level>debug</log.root.level>
                 <log.app.level>debug</log.app.level>
-                <log.sql.level>warn</log.sql.level>
+                <log.sql.level>debug</log.sql.level>
                 <stdout.threshold>debug</stdout.threshold>
                 <log.email.address></log.email.address>
 			</properties>
