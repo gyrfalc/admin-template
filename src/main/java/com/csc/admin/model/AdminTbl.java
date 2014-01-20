@@ -7,6 +7,7 @@ public class AdminTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String tblNm;
+	private String tblType;
 	private String dsplNm;
 	private String shortDesc;
 	private String viewInd;
@@ -108,6 +109,12 @@ public class AdminTbl implements Serializable {
 	}
 	public void setInstrDel(String instrDel) {
 		this.instrDel = instrDel;
+	}
+	public String getTblType() {
+		return tblType;
+	}
+	public void setTblType(String tblType) {
+		this.tblType = tblType;
 	}
 
 }

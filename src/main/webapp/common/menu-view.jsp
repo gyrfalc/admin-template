@@ -2,10 +2,13 @@
 <s:url id="contextURL" value="/" includeParams="none"/>
 <div id="div-action-menu">
 	<ul class="menu-layout">
+		<li><a href="${contextURL}home">home</a></li>	
 		<li><a href="${contextURL}list/${tbl.urlNm}">list</a></li>	
+		<s:if test="%{tbl.tblType == 'edit'}">
 		<li><a href="${contextURL}new/${tbl.urlNm}">new</a></li>	
 		<li><a href="${contextURL}edit/${tbl.urlNm}?key=${key}">edit</a></li>	
 		<li><a href="#" onclick="confirmDelete(); return false;">delete</a></li>	
+		</s:if>
 	</ul>
 	
 	<s:if test="hasActionMessages()">

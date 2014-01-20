@@ -29,6 +29,7 @@ public class AdminCol {
 	private String renderParams;
 	private String colDesc;
 	private int maxLen;
+	private String dsplTblInd;
 	/* if you add a new property, be sure and add it to the clone method */
 	/* ================================================================= */
 	
@@ -136,6 +137,7 @@ public class AdminCol {
 		col.setRenderParams(this.getRenderParams());
 		col.setColDesc(this.getColDesc());
 		col.setMaxLen(this.getMaxLen());
+		col.setDsplTblInd(this.getDsplTblInd());
 		return col;
 	}
 	
@@ -262,5 +264,13 @@ public class AdminCol {
 
 	public void setMaxLen(int maxLen) {
 		this.maxLen = maxLen;
+	}
+
+	public String getDsplTblInd() {
+		return dsplTblInd;
+	}
+
+	public void setDsplTblInd(String dsplTblInd) {
+		this.dsplTblInd = dsplTblInd;
 	}
 }

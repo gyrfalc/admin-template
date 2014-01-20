@@ -69,28 +69,29 @@ public class AdminBldrDao implements IAdminBldrDao {
 	}
 
 	@Override
-	public AdminTbl getTable(String tblNm) {
-		log.debug("get table for name = " + tblNm);
+	public AdminTbl getTableForUrl(String urlNm) {
+		log.debug("get table for url name = " + urlNm);
 		Connection conn = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		AdminTbl tbl = new AdminTbl();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, dspl_nm, short_desc, view_ind, view_nm, lang_ind, lang_col_nm, sort_ind, url_nm, surrogate_key_nm");
+		sql.append(" select tbl_nm, tbl_type, dspl_nm, short_desc, view_ind, view_nm, lang_ind, lang_col_nm, sort_ind, url_nm, surrogate_key_nm");
 		sql.append(", instr_add, instr_edit, instr_del");
 		sql.append(" from admin_tbl");
-		sql.append(" where tbl_nm = ?");
+		sql.append(" where url_nm = ?");
 		
 		try {
 			conn = DataSource.getInstance().getConnection();
 			statement = conn.prepareStatement(sql.toString());
-			statement.setString(1, tblNm);
+			statement.setString(1, urlNm);
 			log.debug(sql.toString());
 			rs = statement.executeQuery();
 			
 			if (rs.next()) {
 				tbl.setTblNm(rs.getString("tbl_nm"));
+				tbl.setTblType(rs.getString("tbl_type"));
 				tbl.setDsplNm(rs.getString("dspl_nm"));
 				tbl.setShortDesc(rs.getString("short_desc"));
 				tbl.setViewInd(rs.getString("view_ind"));
@@ -106,7 +107,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 			}
 			
 		} catch (Exception e) {
-			log.error("failed to get table for name = " + tblNm, e);
+			log.error("failed to get table for url name = " + urlNm, e);
 		} finally {
 			if (rs != null) {
 				try { rs.close(); } catch (Exception e) {}
@@ -133,7 +134,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len");
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" order by dspl_ord");
@@ -164,6 +165,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				col.setRenderParams(rs.getString("render_params"));
 				col.setColDesc(rs.getString("col_desc"));
 				col.setMaxLen(rs.getInt("max_len"));
+				col.setDsplTblInd(rs.getString("dspl_tbl_ind"));
 				
 				list.add(col);
 			}
@@ -189,15 +191,80 @@ public class AdminBldrDao implements IAdminBldrDao {
 
 
 	@Override
-	public List<AdminCol> getColSrchList(String tblNm) {
-		log.debug("get column searchlist for table = " + tblNm);
+	public List<AdminCol> getColDsplTblList(String tblNm) {
+		log.debug("get column display table list for table = " + tblNm);
 		Connection conn = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len");
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
+		sql.append(" from admin_col");
+		sql.append(" where tbl_nm = ?");
+		sql.append(" and dspl_tbl_ind = 'Y'");
+		sql.append(" order by dspl_ord");
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.prepareStatement(sql.toString());
+			statement.setString(1, tblNm);
+			log.debug(sql.toString());
+			rs = statement.executeQuery();
+			
+			while (rs.next()) {
+				AdminCol col = new AdminCol();
+				
+				col.setTblNm(rs.getString("tbl_nm"));
+				col.setColNm(rs.getString("col_nm"));
+				col.setDsplNm(rs.getString("dspl_nm"));
+				col.setDsplOrd(rs.getInt("dspl_ord"));
+				col.setDataType(rs.getString("data_type"));
+				col.setSortInd(rs.getString("sort_ind"));
+				col.setSortOrd(rs.getInt("sort_ord"));
+				col.setSortDir(rs.getString("sort_dir"));
+				col.setSrchInd(rs.getString("srch_ind"));
+				col.setKeyInd(rs.getString("key_ind"));
+				col.setMetaInd(rs.getString("meta_ind"));
+				col.setMetaType(rs.getString("meta_type"));
+				col.setRenderType(rs.getString("render_type"));
+				col.setRenderParams(rs.getString("render_params"));
+				col.setColDesc(rs.getString("col_desc"));
+				col.setMaxLen(rs.getInt("max_len"));
+				col.setDsplTblInd(rs.getString("dspl_tbl_ind"));
+				
+				list.add(col);
+			}
+			
+		} catch (Exception e) {
+			log.error("failed to get column display table list for table = " + tblNm, e);
+		} finally {
+			if (rs != null) {
+				try { rs.close(); } catch (Exception e) {}
+			}
+			
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<AdminCol> getColSrchList(String tblNm) {
+		log.debug("get column search list for table = " + tblNm);
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and srch_ind = 'Y'");
@@ -229,12 +296,13 @@ public class AdminBldrDao implements IAdminBldrDao {
 				col.setRenderParams(rs.getString("render_params"));
 				col.setColDesc(rs.getString("col_desc"));
 				col.setMaxLen(rs.getInt("max_len"));
+				col.setDsplTblInd(rs.getString("dspl_tbl_ind"));
 				
 				list.add(col);
 			}
 			
 		} catch (Exception e) {
-			log.error("failed to get column list for table = " + tblNm, e);
+			log.error("failed to get column search list for table = " + tblNm, e);
 		} finally {
 			if (rs != null) {
 				try { rs.close(); } catch (Exception e) {}
@@ -251,6 +319,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		
 		return list;
 	}
+
 
 	
 	@Override
@@ -380,7 +449,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 			}
 			
 		} catch (Exception e) {
-			log.error("failed to key columns for table = " + tblNm, e);
+			log.error("failed to get key columns for table = " + tblNm, e);
 		} finally {
 			if (rs != null) {
 				try { rs.close(); } catch (Exception e) {}
@@ -397,6 +466,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		
 		return list;
 	}
+	
 
 	@Override
 	public List<AdminCol> getColMetaList(String tblNm) {
@@ -454,7 +524,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		AdminCol col = new AdminCol();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params");
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and col_nm = ?");
@@ -481,6 +551,9 @@ public class AdminBldrDao implements IAdminBldrDao {
 				col.setMetaType(rs.getString("meta_type"));
 				col.setRenderType(rs.getString("render_type"));
 				col.setRenderParams(rs.getString("render_params"));
+				col.setColDesc(rs.getString("col_desc"));
+				col.setMaxLen(rs.getInt("max_len"));
+				col.setDsplTblInd(rs.getString("dspl_tbl_ind"));
 			}
 			
 		} catch (Exception e) {
@@ -512,20 +585,15 @@ public class AdminBldrDao implements IAdminBldrDao {
 	@Override
 	public List<AdminNotice> getNoticeList() {
 		log.debug("get admin notice list");
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ListItem> getList(String listViewNm) {
-		log.debug("get list for name = " + listViewNm);
 		Connection conn = null;
 		Statement statement = null;
 		ResultSet rs = null;
-		ArrayList<ListItem> list = new ArrayList<ListItem>();
+		ArrayList<AdminNotice> list = new ArrayList<AdminNotice>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select id, name from ").append(listViewNm);
+		sql.append(" select note_id, note_type, note_msg, note_usr, note_dt ");
+		sql.append(" from admin_notice ");
+		sql.append(" order by note_dt desc ");
 		
 		try {
 			conn = DataSource.getInstance().getConnection();
@@ -534,11 +602,109 @@ public class AdminBldrDao implements IAdminBldrDao {
 			rs = statement.executeQuery(sql.toString());
 			
 			while (rs.next()) {
-				ListItem lang = new ListItem();
-				lang.setId(rs.getString("id"));
-				lang.setName(rs.getString("name"));
+				AdminNotice note = new AdminNotice();
+				note.setNoteId(rs.getLong("note_id"));
+				note.setNoteType(rs.getString("note_type"));
+				note.setNoteMsg(rs.getString("note_msg"));
+				note.setNoteUsr(rs.getInt("note_usr"));
+				note.setNoteDt(rs.getDate("note_dt"));
 								
-				list.add(lang);
+				list.add(note);
+			}
+			
+		} catch (Exception e) {
+			log.error("failed to get admin notice", e);
+		} finally {
+			if (rs != null) {
+				try { rs.close(); } catch (Exception e) {}
+			}
+			
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return list;
+	}
+	@Override
+	public List<ListItem> getList(String listNm, String langCd) {
+		log.debug("get list for name = " + listNm);
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		List<ListItem> list = new ArrayList<ListItem>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select vw_nm, lang_ind from admin_lst where lst_nm = ?");
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.prepareStatement(sql.toString());
+			statement.setString(1, listNm);
+			
+			log.debug(sql.toString());
+			rs = statement.executeQuery();
+			
+			if (rs.next()) {
+				list = getList(rs.getString(1), rs.getString(2), langCd);
+			} else {
+				log.error("no list found for listNm = " + listNm);
+			}
+			
+		} catch (Exception e) {
+			log.error("failed to get list", e);
+		} finally {
+			if (rs != null) {
+				try { rs.close(); } catch (Exception e) {}
+			}
+			
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<ListItem> getList(String listViewNm, String langInd, String langCd) {
+		log.debug("get list for name = " + listViewNm);
+		boolean useLang = ("Y".equalsIgnoreCase(langInd)) ;
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		ArrayList<ListItem> list = new ArrayList<ListItem>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select id, name from ").append(listViewNm);
+		if (useLang) {
+			sql.append(" where lang_cd = ?");
+		}
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.prepareStatement(sql.toString());
+			if (useLang) {
+				statement.setString(1, langCd);
+			}
+			
+			log.debug(sql.toString());
+			rs = statement.executeQuery();
+			
+			while (rs.next()) {
+				ListItem item = new ListItem();
+				item.setId(rs.getString("id"));
+				item.setName(rs.getString("name"));
+								
+				list.add(item);
 			}
 			
 		} catch (Exception e) {
@@ -560,5 +726,5 @@ public class AdminBldrDao implements IAdminBldrDao {
 		return list;
 
 	}
-
+	
 }

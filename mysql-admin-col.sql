@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2014 at 09:17 PM
+-- Generation Time: Jan 16, 2014 at 06:00 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `admin_col` (
   `render_params` varchar(255) DEFAULT NULL,
   `col_desc` varchar(255) NOT NULL,
   `max_len` int(11) NOT NULL,
+  `qry_ind` varchar(1) NOT NULL,
   PRIMARY KEY (`tbl_nm`,`col_nm`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -50,12 +51,17 @@ CREATE TABLE IF NOT EXISTS `admin_col` (
 -- Dumping data for table `admin_col`
 --
 
-INSERT INTO `admin_col` (`tbl_nm`, `col_nm`, `dspl_nm`, `dspl_ord`, `data_type`, `sort_ind`, `sort_ord`, `sort_dir`, `srch_ind`, `key_ind`, `meta_ind`, `meta_type`, `render_type`, `render_params`, `col_desc`, `max_len`) VALUES
-('fabric', 'fabric_cd', 'Fabric Code', 1, 'char', 'N', 0, '', 'Y', 'Y', 'N', '', 'text', 'css=small', '', 5),
-('fabric', 'fabric_desc', 'Fabric Description', 3, 'char', 'N', 0, '', 'N', 'N', 'N', '', 'textarea', 'html=true', '', 255),
-('fabric', 'fabric_family_cd', 'Fabric Family', 4, 'char', 'N', NULL, NULL, 'Y', 'N', 'N', NULL, 'list', 'list=lst_fabric_family,css=large', '', 5),
-('fabric', 'fabric_nm', 'Fabric Name', 2, 'char', 'Y', 1, 'asc', 'Y', 'N', 'N', '', 'text', 'css=large', '', 100),
-('fabric', 'lang_cd', 'Lang Cd', 99, 'char', 'N', NULL, NULL, 'N', 'N', 'Y', 'lang', 'none', NULL, '', 5);
+INSERT INTO `admin_col` (`tbl_nm`, `col_nm`, `dspl_nm`, `dspl_ord`, `data_type`, `sort_ind`, `sort_ord`, `sort_dir`, `srch_ind`, `key_ind`, `meta_ind`, `meta_type`, `render_type`, `render_params`, `col_desc`, `max_len`, `qry_ind`) VALUES
+('fabric', 'fabric_cd', 'Fabric Code', 1, 'char', 'N', 0, '', 'Y', 'Y', 'N', '', 'text', 'css=small', 'Example column description', 5, 'Y'),
+('fabric', 'fabric_desc', 'Fabric Description', 3, 'char', 'N', 0, '', 'N', 'N', 'N', '', 'textarea', 'html=true', 'Example column description', 255, 'Y'),
+('fabric', 'fabric_family_cd', 'Fabric Family', 4, 'char', 'N', NULL, NULL, 'Y', 'N', 'N', NULL, 'list', 'list=lst_fabric_family,css=large', 'Example column description', 5, 'Y'),
+('fabric', 'fabric_nm', 'Fabric Name', 2, 'char', 'Y', 1, 'asc', 'Y', 'N', 'N', '', 'text', 'css=large', 'Example column description', 100, 'Y'),
+('fabric', 'lang_cd', 'Lang Cd', 99, 'char', 'N', NULL, NULL, 'N', 'N', 'Y', 'lang', 'none', NULL, 'Example column description', 5, 'Y'),
+('vw_fabric_master', 'fabric_cd', 'Fabric Code', 1, 'char', 'N', 0, '', 'Y', 'Y', 'N', '', 'text', 'css=small', 'Example column description', 5, 'Y'),
+('vw_fabric_master', 'fabric_desc', 'Fabric Description', 3, 'char', 'N', 0, '', 'N', 'N', 'N', '', 'textarea', 'html=true', 'Example column description', 255, 'Y'),
+('vw_fabric_master', 'fabric_family_cd', 'Fabric Family', 4, 'char', 'N', NULL, NULL, 'Y', 'N', 'N', NULL, 'list', 'list=lst_fabric_family,css=large', 'Example column description', 5, 'Y'),
+('vw_fabric_master', 'fabric_nm', 'Fabric Name', 2, 'char', 'Y', 1, 'asc', 'Y', 'N', 'N', '', 'text', 'css=large', 'Example column description', 100, 'Y'),
+('vw_fabric_master', 'lang_cd', 'Lang Cd', 99, 'char', 'N', NULL, NULL, 'N', 'N', 'Y', 'lang', 'none', NULL, 'Example column description', 5, 'Y');
 
 --
 -- Constraints for dumped tables

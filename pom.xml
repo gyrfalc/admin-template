@@ -180,16 +180,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>${mybatis.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.mybatis.caches</groupId>
-		    <artifactId>mybatis-ehcache</artifactId>
-		    <version>1.0.2</version>
-		</dependency>		
-		<dependency>
 		    <groupId>cglib</groupId>
 		    <artifactId>cglib</artifactId>
 		    <version>${cglib.version}</version>
@@ -287,48 +277,33 @@
 
 
 	 <profiles>
-		<profile>
-			<id>qa</id>
-			<properties>
-				<env>qa</env>
-				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://localhost:3306/adminbldr</jdbc.url>
-                <jdbc.username>test</jdbc.username>
-                <jdbc.password>0spr3y</jdbc.password>             
+        <profile>
+            <id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>						
+            <properties>
+                <env>dev</env>
+                <jdbc.driverClassName>oracle.jdbc.OracleDriver</jdbc.driverClassName>
+                <jdbc.url>jdbc:oracle:thin:@ordb02d.asp.dupont.com:1521:SFSPECDE</jdbc.url>
+                <!-- SCHEMA OWNER:  safespec  PWD: aesh%32bcv -->
+                <!-- APPLICATION: safespec_app  PWD:  knq8#m2l -->
+                <!-- REPORTING:	safespec_rpt	PWD: lwcn#74q -->
+                <jdbc.username>SAFESPEC</jdbc.username>
+                <!-- <jdbc.password>hnw#98pa</jdbc.password> -->  
+                <jdbc.password>aesh%32bcv</jdbc.password>           
                 <mailhost>mailhost</mailhost>
-                <logfile.folder>C:/Users/Merle/Logs</logfile.folder>
-                <log.root.level>warn</log.root.level>
-                <log.app.level>warn</log.app.level>
-                <log.sql.level>warn</log.sql.level>
-                <stdout.threshold>fatal</stdout.threshold>
-                <log.email.address>eDeliverySupport@csc.com</log.email.address>
-			</properties>
-		</profile>	 
-
-		<profile>
-			<id>mysql</id>
-					
-			<properties>
-				<env>dev</env>
-				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://localhost:3306/adminbldr</jdbc.url>
-                <jdbc.username>adminbldr</jdbc.username>
-                <jdbc.password>wh4t3v3r</jdbc.password>
-                <mailhost>mailhost</mailhost>
-                <logfile.folder>C:/Users/Merle/Logs</logfile.folder>
+                <logfile.folder>C:/Logs</logfile.folder>
                 <log.root.level>warn</log.root.level>
                 <log.app.level>debug</log.app.level>
                 <log.sql.level>debug</log.sql.level>
                 <stdout.threshold>debug</stdout.threshold>
-                <log.email.address></log.email.address>
-			</properties>
-		</profile>	 
+                <log.email.address>mmccartn@csc.com</log.email.address>
+            </properties>
+        </profile>	 
 		
 		<profile>
 			<id>hsqldb</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>	
 			<properties>
 				<env>dev</env>
 				<jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
@@ -369,7 +344,6 @@
 		<jsp.version>2.1</jsp.version>
 		<taglibs.version>1.1.2</taglibs.version>
 		<jstl.version>1.2</jstl.version>
-		<mybatis.version>3.0.2</mybatis.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<cglib.version>2.2</cglib.version>
 		<displaytag.version>1.2</displaytag.version>
@@ -377,10 +351,11 @@
 		<javax.mail.version>1.4.1</javax.mail.version>
         <jackson.core.version>1.5.5</jackson.core.version>
 		<maven.jetty.plugin.version>6.1.21</maven.jetty.plugin.version>
-		<!-- MySQL JDBC Driver  -->
-        <jdbc.groupId>mysql</jdbc.groupId>
-        <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>5.1.6</jdbc.version>
+        <!--  Oracle JDBC Driver  -->
+        <jdbc.groupId>com.oracle</jdbc.groupId>
+        <jdbc.artifactId>ojdbc14</jdbc.artifactId>
+        <jdbc.version>10.2.0.4.0</jdbc.version>
+
         
 		
 	</properties>

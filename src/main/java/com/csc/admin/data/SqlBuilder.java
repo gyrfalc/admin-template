@@ -14,9 +14,12 @@ public class SqlBuilder {
 
 	private static final Logger log = Logger.getLogger(SqlBuilder.class);
 	
+	public String buildListSql(AdminTbl tbl, List<AdminCol> selcols, List<AdminCol> sortcols, String langCd) {
+		return buildListSql(tbl, selcols, sortcols, langCd, null);
+	}
 	
-	public String buildRowListSql(AdminTbl tbl, List<AdminCol> selcols, List<AdminCol> sortcols, String langCd) {
-		log.debug("build row list sql for table = " + tbl.getTblNm() );
+	public String buildListSql(AdminTbl tbl, List<AdminCol> selcols, List<AdminCol> sortcols, String langCd, String customWhere) {
+		log.debug("build list sql for table = " + tbl.getTblNm() );
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select ").append(tbl.getSurrogateKeyNm()).append(" as id");
@@ -36,6 +39,15 @@ public class SqlBuilder {
 			sql.append(" where ");
 			sql.append(tbl.getLangColNm());
 			sql.append(" = '").append(langCd).append("'");
+			
+			if (customWhere != null && customWhere.length() > 0) {
+				sql.append(" and ").append(customWhere);
+			}
+		} else {
+			if (customWhere != null && customWhere.length() > 0) {
+				sql.append(" where ").append(customWhere);
+			}
+			
 		}
 		
 		if (tbl.hasSortCols()) {
@@ -220,5 +232,53 @@ public class SqlBuilder {
 		
 
 	}	
+	
+	
+	private String buildColQry(String name, String val, String dataType, String renderType) {
+		String retval = null;
+		if (AdminConstants.DATA_TYPE_STRING.equals(dataType)) {
+			if (AdminConstants.RENDER_TYPE_LIST.equalsIgnoreCase(renderType)) {
+				retval = name + " = '" + val + "'";
+			} else {
+				String srchstr = val.trim().toLowerCase();
+				retval = "lower(" + name + ") like '%" + srchstr + "%'";
+			}
+			
+		} else {
+			retval = name + " = " + val;
+		}
+		return retval;
+	}
+	
+	public String buildSearchSql(
+			AdminTbl tbl, 
+			List<AdminCol> selcols, 
+			List<AdminCol> sortcols, 
+			List<AdminCol> srchcols, 
+			Map<String,String[]> data,
+			String langCd ) 
+	{
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append(" (");
+		boolean first = true;
+		for (AdminCol q : srchcols) 
+		{
+			if (data.containsKey(q.getColNm())) {
+				String val = data.get(q.getColNm())[0];
+				if (val != null && val.trim().length() > 0) {
+					if (!first) { sql.append(" and "); }
+					sql.append(buildColQry(q.getColNm(),val,q.getDataType(),q.getRenderType()));
+					first = false;		
+				}
+						
+			}
+
+		}
+		
+		sql.append(") ");
+		return buildListSql(tbl, selcols, sortcols, langCd, sql.toString());
+	}
 
 }
+

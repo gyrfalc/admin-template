@@ -32,12 +32,19 @@ public class DataSource {
     private DataSource() throws IOException, SQLException, PropertyVetoException {
         // load datasource properties
         log.info("Reading datasource.properties from classpath");
-        props = AdminUtils.readProperties("database-test.properties");
+        props = AdminUtils.readProperties("database.properties");
         cpds = new ComboPooledDataSource();
         cpds.setDriverClass(props.getProperty("jdbc.driverClassName"));
         cpds.setJdbcUrl(props.getProperty("jdbc.url"));
         cpds.setUser(props.getProperty("jdbc.username"));
         cpds.setPassword(props.getProperty("jdbc.password"));
+        
+        if (log.isDebugEnabled()) {
+        	log.debug("driver name = " + cpds.getDriverClass());
+        	log.debug("jdbc url = " + cpds.getJdbcUrl());
+        	log.debug("user name = " + cpds.getUser());
+        	log.debug("password = " + cpds.getPassword());
+        }
 
         cpds.setInitialPoolSize(new Integer((String) props.getProperty("conn.initialPoolSize")));
         cpds.setAcquireIncrement(new Integer((String) props.getProperty("conn.acquireIncrement")));

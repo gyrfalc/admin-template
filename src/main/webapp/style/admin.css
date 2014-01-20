@@ -91,6 +91,17 @@ td.label {
 	border-bottom: 1px dotted #ddd;
 }
 
+td.INFO {
+	background-color: #88ff88;
+}
+td.WARN {
+	background-color: #ffaa00;
+}
+td.ERROR {
+	background-color: #ff0000;
+	color: white;
+}
+
 .required {
 	font-weight: bold;
 	color: red;
@@ -188,7 +199,7 @@ td.table-list {
 }
 
 .field-info {
-	color: #bbb;
+	color: #888;
 	font-style: italic;
 }
 
@@ -217,6 +228,7 @@ td.table-list {
 	height: 300px;
 	display: none;
 }
+
 
 ul.form-layout {
 	list-style-type: none;
@@ -295,3 +307,4 @@ ul.clone-lang {
 	background-color: #bbb; 
 	margin: 20px 0 0 0;
 }
+

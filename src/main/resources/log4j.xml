@@ -34,7 +34,7 @@
 		<param name="SMTPHost" value="${mailhost}" />
 		<param name="From" value="SafeSPEC@dupont.com" />
 		<param name="To" value="${log.email.address}" />
-		<param name="Subject" value="SafeSPEC US Chem Exception Log - ${env}" />
+		<param name="Subject" value="SafeSPEC Admin Exception Log - ${env}" />
 		<param name="BufferSize" value="1" />
 		<!-- send email for error level only -->
 		<param name="threshold" value="error" />
@@ -44,16 +44,6 @@
 		</layout>
 	</appender>
 		
-	<logger name="java.sql" additivity="false">
-        <level value="${log.sql.level}" />
-   		<appender-ref ref="stdout"/>
-        <appender-ref ref="file"/> 
-    </logger>
-    <logger name="com.ibatis" additivity="false">
-        <level value="${log.sql.level}" />
-   		<appender-ref ref="stdout"/>
-        <appender-ref ref="file"/>
-    </logger>
     <logger name="com.csc" additivity="false">
     	<level value="${log.app.level}" />
    		<appender-ref ref="stdout"/>

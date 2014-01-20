@@ -17,7 +17,7 @@ public class AdminViewAction extends AdminAction {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String tblNm;
+	private String tblUrlNm;
 	private String key;
 	private AdminTbl tbl;
 	private AdminRow row;
@@ -42,17 +42,17 @@ public class AdminViewAction extends AdminAction {
 	public String retrieveRecord(boolean getLists) {
 		if (log.isDebugEnabled()) {
 			log.debug("entering admin retrieve action...");
-			log.debug("table name = " + tblNm);
+			log.debug("table url name = " + tblUrlNm);
 			log.debug("key val = " + key);
 			log.debug("lang cd = " + super.getLangCd());			
 		}
 
 		// retrieve table info
-		tbl = metadao.getTable(tblNm);
+		tbl = metadao.getTableForUrl(tblUrlNm);
 		// retrieve the table columns
-		List<AdminCol> selcols = metadao.getColList(tblNm);
+		List<AdminCol> selcols = metadao.getColList(tbl.getTblNm());
 		// retrieve the key columns
-		List<AdminCol> keycols = metadao.getColKeyList(tblNm);
+		List<AdminCol> keycols = metadao.getColKeyList(tbl.getTblNm());
 		
 		// generate the SQL 
 		String sql = sqlBuilder.buildSelSql(tbl, key, selcols, keycols, super.getLangCd());
@@ -79,7 +79,7 @@ public class AdminViewAction extends AdminAction {
 		listMap = new HashMap<String, List<ListItem>>();
 		for (AdminCol sc : selcols) {
 			if (sc.isList()) {
-				listMap.put(sc.getColNm(), metadao.getList(sc.getListNm()));
+				listMap.put(sc.getColNm(), metadao.getList(sc.getListNm(), super.getLangCd()));
 				if (log.isDebugEnabled()) { 
 					log.debug("retrieve list for col nm = " + sc.getColNm() + " list nm = " + sc.getListNm());
 					log.debug("list count = " + (listMap.get(sc.getColNm()) == null? "null" : listMap.get(sc.getColNm()).size()));
@@ -91,9 +91,9 @@ public class AdminViewAction extends AdminAction {
 	public String addRecord() {
 		log.debug("entering admin add action...");
 		// retrieve the table
-		tbl = metadao.getTable(tblNm);
+		tbl = metadao.getTableForUrl(tblUrlNm);
 		// retrieve the table columns
-		List<AdminCol> selcols = metadao.getColList(tblNm);		
+		List<AdminCol> selcols = metadao.getColList(tbl.getTblNm());		
 		// create an empty row object
 		row = new AdminRow("", selcols);
 		// retrieve select lists
@@ -122,11 +122,11 @@ public class AdminViewAction extends AdminAction {
 			}
 		}
 		
-		tbl = metadao.getTable(tblNm);
-		List<AdminCol> updcols = metadao.getColUpdList(tblNm); 
-		List<AdminCol> metacols = metadao.getColMetaList(tblNm);
-		List<AdminCol> keycols = metadao.getColKeyList(tblNm); 
-		List<AdminCol> selcols = metadao.getColList(tblNm);
+		tbl = metadao.getTableForUrl(tblUrlNm);
+		List<AdminCol> updcols = metadao.getColUpdList(tbl.getTblNm()); 
+		List<AdminCol> metacols = metadao.getColMetaList(tbl.getTblNm());
+		List<AdminCol> keycols = metadao.getColKeyList(tbl.getTblNm()); 
+		List<AdminCol> selcols = metadao.getColList(tbl.getTblNm());
 		
 		
 		String sql = sqlBuilder.buildUpdSql(tbl, key, updcols, metacols, keycols, data, getSessionUserId(), getLangCd());
@@ -161,13 +161,13 @@ public class AdminViewAction extends AdminAction {
 			}
 		}
 		
-		tbl = metadao.getTable(tblNm);
-		List<AdminCol> keycols = metadao.getColKeyList(tblNm); 
-		List<AdminCol> inscols = metadao.getColList(tblNm);
+		tbl = metadao.getTableForUrl(tblUrlNm);
+		List<AdminCol> keycols = metadao.getColKeyList(tbl.getTblNm()); 
+		List<AdminCol> inscols = metadao.getColList(tbl.getTblNm());
 		
 		int result = 0;
 		if ("Y".equalsIgnoreCase(cloneLang)) {
-			List<ListItem> langList = metadao.getList("lst_language");
+			List<ListItem> langList = metadao.getList("lst_language", getLangCd());
 			for (ListItem l : langList) {
 				String sql = sqlBuilder.buildInsSql(tbl, inscols, data, getSessionUserId(), l.getId());
 				result += sqlRunner.executeUpdSql(sql);					
@@ -197,6 +197,21 @@ public class AdminViewAction extends AdminAction {
 
 		return SUCCESS;
 	}
+	
+	
+	public String search() throws Exception {
+		log.debug("entering admin search action... ");
+		// retrieve table
+		tbl = metadao.getTableForUrl(tblUrlNm);
+		// get list of columns to search
+		List<AdminCol> srchcols = metadao.getColSrchList(tbl.getTblNm());
+		// create an empty row object
+		row = new AdminRow("", srchcols);
+		retrieveSelectLists(srchcols);
+		log.debug("leaving admin action...");
+		return SUCCESS;		
+
+	}
 
 
 	public AdminTbl getTbl() {
@@ -208,12 +223,12 @@ public class AdminViewAction extends AdminAction {
 	}
 
 
-	public String getTblNm() {
-		return tblNm;
+	public String getTblUrlNm() {
+		return tblUrlNm;
 	}
 
-	public void setTblNm(String tblNm) {
-		this.tblNm = tblNm;
+	public void setTblUrlNm(String tblUrlNm) {
+		this.tblUrlNm = tblUrlNm;
 	}
 
 	public String getKey() {

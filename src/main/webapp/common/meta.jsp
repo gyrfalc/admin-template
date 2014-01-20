@@ -8,4 +8,4 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
         
-        <meta name="description" content="Don't take a chance when it comes to protection.  Find garments with confidence using DuPont(TM) SafeSPEC(TM) 2.0." /> 
+        <meta name="description" content="Auto-generated Data Administration Console" /> 

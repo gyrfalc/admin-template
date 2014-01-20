@@ -1,5 +1,5 @@
 <%@ include file="/common/taglibs.jsp"%>
-
+<s:url id="contextURL" value="/" includeParams="none"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +14,11 @@
 	</td>
 	<td style="vertical-align: top">
 		<div class="content" style="margin: 0">
-			<h3 class="page-caption">${tbl.dsplNm} Index</h3>
+			<h3 class="page-caption">${tbl.dsplNm} (${pageTitle})</h3>
 			<jsp:include page="/common/menu-list.jsp"/>	
 			
 			<div class="tbl-instr">
-				${tbl.shortDesc}
+				${pageInfo}
 			</div>
 
 			<div class="sub-content">
@@ -35,7 +35,7 @@
 						<s:iterator value="rowlist">
 						<tr>
 							<td>
-								<a href="<c:url value="/view/"/>${tbl.urlNm}?key=${keyVal}"><s:property value="keyVal"/></a>
+								<a href="${contextURL}view/${tbl.urlNm}?key=${keyVal}"><s:property value="keyVal"/></a>
 							</td>
 							<s:iterator value="collist">
 								<td><s:property value="val" escape="false"/></td>
@@ -53,7 +53,11 @@
 			
 	<script type="text/javascript">
 		$(document).ready(function(){
-			  $('#model-list').dataTable();
+			  $('#model-list').dataTable({
+			       "oLanguage": {
+			    	   "sSearch": "Filter this View:"
+			    	}
+			    });
 			});	
 	
 	</script>

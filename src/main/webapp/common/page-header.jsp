@@ -10,7 +10,7 @@
 	&nbsp;&nbsp;
 	<a href="#">logout</a>
 	&nbsp;&nbsp;
-	change language 
+	language 
 	<s:select id="userLangCd" name="langCd" list="langList" listKey="id" listValue="name" cssClass="small" onchange="onChangeLang()"/>
 </div>
 	
@@ -22,7 +22,7 @@
 
 		$.ajax({
 			type: 'POST',
-			url: '<c:url value="/ajax/lang"/>',
+			url: '<s:url value="/ajax/lang" includeParams="none"/>',
 			data: { 'userLangCd': userLangCd }
 		})
 		.done(function( msg ) {

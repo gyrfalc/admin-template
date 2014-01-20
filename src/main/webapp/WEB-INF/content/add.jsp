@@ -4,8 +4,20 @@
 <html>
 <head>
 	<title>${tbl.dsplNm} - Add</title>
-	<script src="<c:url value="/ckeditor/ckeditor.js" />"></script>
-	<script src="<c:url value="/ckeditor/adapters/jquery.js" />"></script>
+	<script src="<s:url value="/ckeditor/ckeditor.js"  includeParams="false" />"></script>
+	<script src="<s:url value="/ckeditor/adapters/jquery.js"  includeParams="false" />"></script>
+	
+	<style>
+	 .ui-tooltip {
+		padding: 10px 20px;
+		color: #444;
+		border-radius: 5px;
+		box-shadow: 0 0 7px black;
+		background-color: white;
+		width: 300px;
+	}
+	</style>
+		
 </head>
 <body>
 	<jsp:include page="/common/page-header.jsp"/>	
@@ -23,11 +35,11 @@
 		<div class="tbl-instr">${tbl.instrAdd }</div>
 
 		<div id="div-form-editor" class="sub-content">
-		<form id="frm-edit" action="<c:url value="/ins"/>/${tblNm}" method="post">
+		<form id="frm-edit" action="<s:url value="/ins" includeParams="false"/>/${tblUrlNm}" method="post">
 			<table class="form-layout">
 				<tr>
 					<td class="label" style="padding-top:25px">Language</td>
-					<td style="padding:0">
+					<td style="padding:0" colspan="2">
 						<ul class="clone-lang">
 							<li><input type="radio" name="model.cloneLang" value="Y" checked="checked"/>&nbsp;Create record in ${langNm} and clone to all other languages.</li>
 							<li><input type="radio" name="model.cloneLang" value="N" />&nbsp;Create record in ${langNm} only.</li>
@@ -58,19 +70,16 @@
 						</s:if>
 						<s:if test="%{renderType=='list'}" >
 							<select name="${colNm}" class="${cssClass}">
+								<option value=""></option>
 								<s:set name="colkey" value="%{colNm}" />
 								<s:iterator value="%{listMap[#colkey]}">
-									<s:if test="id==val">
-										<option value="${id}" selected="selected">${name}</option>
-									</s:if>
-									<s:else>
-										<option value="${id}">${name}</option>
-									</s:else>
+									<option value="${id}">${name}</option>
 								</s:iterator>
 							</select>
 						</s:if>
 					
 					</td>
+					<td class="field-info"><s:property value="colDesc" escape="false"/></td>
 				</tr>		
 				</s:if>
 				</s:iterator>			
@@ -84,6 +93,6 @@
 	</td>
 	</tr></table>
 			
-	
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2014 at 09:15 PM
+-- Generation Time: Jan 16, 2014 at 05:59 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `admin_tbl` (
   `instr_add` varchar(1000) DEFAULT NULL,
   `instr_edit` varchar(1000) DEFAULT NULL,
   `instr_del` varchar(255) DEFAULT NULL,
+  `tbl_type` varchar(10) NOT NULL,
   PRIMARY KEY (`tbl_nm`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -47,8 +48,9 @@ CREATE TABLE IF NOT EXISTS `admin_tbl` (
 -- Dumping data for table `admin_tbl`
 --
 
-INSERT INTO `admin_tbl` (`tbl_nm`, `dspl_nm`, `short_desc`, `view_ind`, `view_nm`, `lang_ind`, `sort_ind`, `lang_col_nm`, `url_nm`, `surrogate_key_nm`, `instr_add`, `instr_edit`, `instr_del`) VALUES
-('fabric', 'Fabric', 'Fabric short description', 'N', '', 'Y', 'Y', 'lang_cd', 'fabric', 'fabric_cd', 'Example instructions for adding a new row.', 'Example instructions for editing an existing row.', 'Example instructions for deleting a row.');
+INSERT INTO `admin_tbl` (`tbl_nm`, `dspl_nm`, `short_desc`, `view_ind`, `view_nm`, `lang_ind`, `sort_ind`, `lang_col_nm`, `url_nm`, `surrogate_key_nm`, `instr_add`, `instr_edit`, `instr_del`, `tbl_type`) VALUES
+('fabric', 'Fabric', 'Fabric short description', 'N', '', 'Y', 'Y', 'lang_cd', 'fabric', 'fabric_cd', 'Example instructions for adding a new row.', 'Example instructions for editing an existing row.', 'Example instructions for deleting a row.', 'edit'),
+('vw_fabric_master', 'Fabric Master', 'Short description of fabric master.', 'Y', 'vw_fabric_master', 'Y', 'Y', 'lang_cd', 'fabricmaster', 'fabric_cd', NULL, NULL, NULL, 'query');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -3,18 +3,19 @@
 <div id="div-action-menu">
 	<ul class="menu-layout">
 		<li><a href="${contextURL}home">home</a></li>	
-		<s:if test="%{tbl.tblType == 'edit'}">
-		<li><a href="${contextURL}new/${tbl.urlNm}">new</a></li>
-		</s:if>	
-		<li><a href="${contextURL}list/${tbl.urlNm}">refresh</a></li>	
-		<li><a href="${contextURL}search/${tbl.urlNm}">search</a></li>	
-		<li><a href="#" onclick="exportTable();return false;">export</a></li>				
+		<li><a href="${contextURL}list/${tbl.urlNm}">back</a></li>	
+		<li><a href="#" onclick="clearForm();return false;">clear query</a></li>	
+		<li><a href="#" onclick="submitForm();return false;">submit query</a></li>	
 	</ul>
 	
 	<script type="text/javascript">
-		function exportTable() {
-			alert('Export to Excel is not implemented.');
+		function clearForm() {
+			$("#frm-srch").reset();
 		}
+		function submitForm() {
+			$("#frm-srch").submit();
+		}
+
 	</script>
 
 	<s:if test="hasActionMessages()">

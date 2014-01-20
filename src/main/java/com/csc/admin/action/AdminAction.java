@@ -159,7 +159,7 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 		List<ListItem> list = (List<ListItem>) session.get("lang-list");
 		if (list == null || list.size() == 0) {
 			try {
-				list = metadao.getList("lst_language");
+				list = metadao.getList("lst_language", "en");
 				if (list.size() == 0) {
 					list = this.buildMinimalLangList();
 				}
