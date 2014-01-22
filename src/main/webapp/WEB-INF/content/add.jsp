@@ -27,6 +27,7 @@
 		<div id="div-form-editor" class="sub-content">
 		<form id="frm-edit" action="<s:url value="/ins" includeParams="none" encode="false"/>/${tblUrlNm}" method="post">
 			<table class="form-layout">
+				<s:if test="%{tbl.hasLang()}">
 				<tr>
 					<td class="label" style="padding-top:25px">Language</td>
 					<td style="padding:0" colspan="2">
@@ -36,6 +37,13 @@
 						</ul>					
 					</td>
 				</tr>
+				</s:if><s:else>
+				<tr>
+					<td><input type="hidden" name="cloneLang" value="N"/></td>
+					<td></td>
+					<td></td>
+				</tr>	
+				</s:else>
 				<s:iterator value="row.collist">
 				<s:if test="%{!isMeta()}">
 				<tr>

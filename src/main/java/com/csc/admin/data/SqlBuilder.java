@@ -96,12 +96,13 @@ public class SqlBuilder {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select ").append(tbl.getSurrogateKeyNm()).append(" as id");
 		
-		
+		// build column list
 		for (AdminCol col : selcols) {
 			sql.append(", "); 
 			sql.append(col.getColNm());
 		}
 		
+		// build from clause
 		if (tbl.hasView()) {
 			sql.append(" from ").append(tbl.getViewNm());
 		} else {
@@ -193,8 +194,6 @@ public class SqlBuilder {
 			String langCd) 
 	{
 		StringBuilder sql = new StringBuilder();
-		
-		//TODO need to handle auto-generated keys
 		
 		//build the insert set clause for all fields
 		sql.append(" insert into ").append(tbl.getTblNm()).append(" (");

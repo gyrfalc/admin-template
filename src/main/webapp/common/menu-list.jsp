@@ -3,10 +3,10 @@
 <div id="div-action-menu">
 	<ul class="menu-layout">
 		<li><a href="${contextURL}home">home</a></li>	
-		<li><a href="${contextURL}list/${tbl.urlNm}">refresh</a></li>	
+		<li><a href="${contextURL}list/${tbl.urlNm}">index</a></li>	
 		<li><a href="${contextURL}search/${tbl.urlNm}">search</a></li>	
 		<li><a href="#" onclick="exportTable();return false;">export</a></li>		
-		<s:if test="%{tbl.tblType == 'edit'}">
+		<s:if test="%{tbl.tblType != 'view'}">
 		<li><a href="${contextURL}new/${tbl.urlNm}">new</a></li>
 		</s:if>	
 				

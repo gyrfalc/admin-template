@@ -42,6 +42,7 @@
 							<input type="text" id="fld_${colNm}" name="${colNm}" class="search" />
 						</s:else>
 					</td>
+					<td class="field-info"><s:property value="colDesc" escape="false"/></td>
 				</tr>		
 				</s:iterator>			
 			</table>

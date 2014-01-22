@@ -3,7 +3,7 @@
 <div id="div-action-menu">
 		<ul class="menu-layout">
 			<li><a href="${contextURL}home">home</a></li>	
-			<li><a href="${contextURL}list/${tbl.urlNm}">list</a></li>	
+			<li><a href="${contextURL}list/${tbl.urlNm}">index</a></li>	
 			<li><a href="#" onclick="submitForm(); return false;">save</a></li>	
 		</ul>
 

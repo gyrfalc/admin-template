@@ -54,6 +54,7 @@ public class AdminListAction extends AdminAction {
 		List<AdminCol> sortcols = metadao.getColSortList(tbl.getTblNm());
 		// get list of columns to search
 		List<AdminCol> srchcols = metadao.getColSrchList(tbl.getTblNm());
+
 		// get sql to retrieve those columns
 		@SuppressWarnings("unchecked")
 		Map <String, String[]> data = request.getParameterMap();

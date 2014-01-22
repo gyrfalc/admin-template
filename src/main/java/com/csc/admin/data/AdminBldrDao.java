@@ -386,7 +386,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select col_nm, data_type");
+		sql.append(" select col_nm, dspl_nm, data_type, max_len");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and key_ind = 'N'");
@@ -402,7 +402,9 @@ public class AdminBldrDao implements IAdminBldrDao {
 			while (rs.next()) {
 				AdminCol col = new AdminCol();
 				col.setColNm(rs.getString("col_nm"));
+				col.setDsplNm(rs.getString("dspl_nm"));
 				col.setDataType(rs.getString("data_type"));
+				col.setMaxLen(rs.getInt("max_len"));
 				list.add(col);
 			}
 			
@@ -439,6 +441,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and key_ind = 'Y'");
+		sql.append(" order by dspl_ord");
 		
 		try {
 			conn = DataSource.getInstance().getConnection();

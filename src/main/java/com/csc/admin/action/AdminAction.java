@@ -233,7 +233,7 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 		boolean valid = true;
 		
 		for (AdminCol col : valcols) {
-			
+			log.debug("validating column " + col.getColNm());
 			if (data.containsKey(col.getColNm())) {
 				String val = data.get(col.getColNm())[0];
 				if (StringUtils.isEmpty(val)) {
@@ -246,6 +246,7 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 					//test length
 					if (val.length() > col.getMaxLen()) {
 						addActionError(col.getDsplNm() + " may not exceed " + col.getMaxLen() + " characters.");
+						valid = false;
 					}
 				}				
 				

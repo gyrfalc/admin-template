@@ -21,7 +21,25 @@
 		<div class="sub-content">
 			<table class="form-layout">
 				<s:iterator value="row.collist">
-				<tr><td class="label"><s:property value="dsplNm"/></td><td> <s:property value="val" escape="false"/></td></tr>		
+				<tr>
+					<td class="label"><s:property value="dsplNm"/></td>
+					<td>
+						<s:if test="%{renderType=='list'}" >
+							<select name="${colNm}" class="${cssClass}" style="${cssStyle}" disabled="disabled">
+								<option value=""></option>
+								<s:set name="colkey" value="%{colNm}" />
+								<s:iterator value="%{listMap[#colkey]}">
+									<s:if test="id==val">
+										<option value="${id}" selected="selected">${name}</option>
+									</s:if>
+								</s:iterator>
+							</select>
+						</s:if><s:else>
+							<s:property value="val" escape="false"/>
+						</s:else>						
+					</td>
+					<td class="field-info"><s:property value="colDesc" escape="false"/></td>
+				</tr>		
 				</s:iterator>			
 			</table>
 		</div>

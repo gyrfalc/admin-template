@@ -3,17 +3,17 @@
 <div id="div-action-menu">
 	<ul class="menu-layout">
 		<li><a href="${contextURL}home">home</a></li>	
-		<li><a href="${contextURL}list/${tbl.urlNm}">back</a></li>	
+		<li><a href="${contextURL}list/${tbl.urlNm}">index</a></li>	
 		<li><a href="#" onclick="clearForm();return false;">clear query</a></li>	
 		<li><a href="#" onclick="submitForm();return false;">submit query</a></li>	
 	</ul>
 	
 	<script type="text/javascript">
 		function clearForm() {
-			$("#frm-srch").reset();
+			document.getElementById("frm-srch").reset();
 		}
 		function submitForm() {
-			$("#frm-srch").submit();
+			document.getElementById("frm-srch").submit();
 		}
 
 	</script>

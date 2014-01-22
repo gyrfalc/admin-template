@@ -3,7 +3,7 @@
 <div id="div-action-menu">
 	<ul class="menu-layout">
 		<li><a href="${contextURL}home">home</a></li>	
-		<li><a href="${contextURL}list/${tbl.urlNm}">list</a></li>	
+		<li><a href="${contextURL}list/${tbl.urlNm}">index</a></li>	
 		<s:if test="%{tbl.tblType != 'view'}">
 		<li><a href="${contextURL}new/${tbl.urlNm}">new</a></li>	
 		<li><a href="${contextURL}edit/${tbl.urlNm}?key=${key}">edit</a></li>	

@@ -2,9 +2,12 @@ package com.csc.admin.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+
+import com.csc.admin.model.AdminCol;
 
 
 public class AdminUtils {
@@ -39,5 +42,11 @@ public class AdminUtils {
         props.load(stream);
         log.debug("returning properties to caller...");
         return props;
+    }
+    
+    public static void convertColumnsToStringDataType(List<AdminCol> cols) {
+    	for (AdminCol col : cols) {
+    		col.setDataType(AdminConstants.DATA_TYPE_STRING);
+    	}
     }
 }

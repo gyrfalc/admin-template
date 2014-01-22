@@ -31,7 +31,7 @@ public class AdminViewAction extends AdminAction {
 
 	public String viewRecord() {
 		log.debug("entering admin view action ...");
-		return retrieveRecord(false);
+		return retrieveRecord(true);
 	}
 	
 	public String editRecord() {
@@ -51,6 +51,7 @@ public class AdminViewAction extends AdminAction {
 		tbl = metadao.getTableForUrl(tblUrlNm);
 		// retrieve the table columns
 		List<AdminCol> selcols = metadao.getColList(tbl.getTblNm());
+		
 		// retrieve the key columns
 		List<AdminCol> keycols = metadao.getColKeyList(tbl.getTblNm());
 		
@@ -154,6 +155,9 @@ public class AdminViewAction extends AdminAction {
 			// turn around and retrieve the record to get latest meta data
 			sql = sqlBuilder.buildSelSql(tbl, key, selcols, keycols, getLangCd());
 			row = sqlRunner.executeSelSql(selcols, sql);
+			
+			// retrieve lists
+			retrieveSelectLists(selcols);
 
 			log.debug("leaving update action...");
 
@@ -221,7 +225,10 @@ public class AdminViewAction extends AdminAction {
 			// turn around and retrieve the record to get latest meta data
 			String sql = sqlBuilder.buildSelSql(tbl, key, inscols, keycols, getLangCd());
 			row = sqlRunner.executeSelSql(inscols, sql);
-			
+	
+			// retrieve lists
+			retrieveSelectLists(inscols);
+
 			
 			log.debug("leaving insert action...");
 

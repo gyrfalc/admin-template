@@ -9,7 +9,7 @@ import java.util.Map;
 import com.csc.admin.util.AdminConstants;
 
 public class AdminCol {
-	private static final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+	private static final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 	
 	/* ================================================================= */
 	/* if you add a new property, be sure and add it to the clone method */
