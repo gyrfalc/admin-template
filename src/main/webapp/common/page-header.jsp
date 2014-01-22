@@ -22,7 +22,7 @@
 
 		$.ajax({
 			type: 'POST',
-			url: '<s:url value="/ajax/lang" includeParams="none"/>',
+			url: '<s:url value="/ajax/lang" includeParams="none" encode="false"/>',
 			data: { 'userLangCd': userLangCd }
 		})
 		.done(function( msg ) {

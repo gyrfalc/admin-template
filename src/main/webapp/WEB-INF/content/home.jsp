@@ -24,7 +24,6 @@
 				<table id="model-list">
 					<thead>
 						<tr>
-							<th>ID</th>
 							<th>Date</th>
 							<th>Type</th>
 							<th>Message</th>
@@ -33,7 +32,6 @@
 					<tbody>
 						<s:iterator value="noticeList">
 						<tr>
-							<td><s:property value="noteId"/></td>
 							<td><s:property value="noteDt"/></td>
 							<td class="<s:property value="noteType"/>"><s:property value="noteType"/></td>							
 							<td><s:property value="noteMsg" escape="false"/></td>						

@@ -5,10 +5,10 @@ import java.util.List;
 public class AdminRow {
 
 	private List<AdminCol> collist;
-	private String keyVal;
+	private String key;
 	
-	public AdminRow(String keyVal, List<AdminCol> collist) {
-		this.keyVal = keyVal;
+	public AdminRow(String key, List<AdminCol> collist) {
+		this.key = key;
 		this.collist = collist;
 	}
 	
@@ -20,12 +20,12 @@ public class AdminRow {
 		this.collist = collist;
 	}
 
-	public String getKeyVal() {
-		return keyVal;
+	public String getKey() {
+		return key;
 	}
 
-	public void setKeyVal(String keyVal) {
-		this.keyVal = keyVal;
+	public void setKey(String key) {
+		this.key = key;
 	}
 	
 

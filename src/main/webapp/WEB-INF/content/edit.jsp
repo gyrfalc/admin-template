@@ -1,23 +1,13 @@
 <%@ include file="/common/taglibs.jsp"%>
-<s:url id="contextURL" value="/" includeParams="none"/>
+<s:url id="contextURL" value="/" includeParams="none" encode="false"/>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>${tbl.dsplNm} - Edit</title>
-	<script src="<s:url value="/ckeditor/ckeditor.js"  includeParams="false"/>"></script>
-	<script src="<s:url value="/ckeditor/adapters/jquery.js"  includeParams="false"/>"></script>
+	<script src="<s:url value="/ckeditor/ckeditor.js"  includeParams="none" encode="false"/>"></script>
+	<script src="<s:url value="/ckeditor/adapters/jquery.js"  includeParams="none" encode="false"/>"></script>
 	
-	<style>
-	 .ui-tooltip {
-		padding: 10px 20px;
-		color: #444;
-		border-radius: 5px;
-		box-shadow: 0 0 7px black;
-		background-color: white;
-		width: 300px;
-	}
-	</style>
 </head>
 	<jsp:include page="/common/page-header.jsp"/>	
 	
@@ -30,15 +20,22 @@
 	<div class="content" style="margin: 0">
 		<h3 class="page-caption">${tbl.dsplNm} (Edit)</h3>
 		<jsp:include page="/common/menu-edit.jsp"/>	
+		
+		<div class="instructions">
+			<s:property value="tbl.instrEdit" escape="false"/>
+		</div>
 
 		<div id="div-form-editor" class="sub-content">
-		<form id="frm-edit" action="<s:url value="/upd"  includeParams="false"/>/${tblUrlNm}" method="post">
+		<form id="frm-edit" action="<s:url value="/upd"  includeParams="none" encode="false"/>/${tblUrlNm}" method="post">
 			<table class="form-layout">
 				<s:iterator value="row.collist">
 				<s:if test="%{!isMeta() && renderType!='hidden'}">
 				<tr>
 					<td class="label" >
 						<s:property value="dsplNm"/>
+						<s:if test="%{isReq()}">
+							<span class="required">*</span>
+						</s:if>
 					</td>
 					<td>
 					<s:if test="%{isKey()}">
@@ -46,21 +43,26 @@
 						<s:property value="val"/>
 					</s:if><s:else>				
 						<s:if test="%{renderType=='text'}" >
-							<input type="text" id="fld_${colNm}" name="${colNm}" value="<s:property value="val"/>" maxlength="${maxLen}" class="${cssClass}" />
+							<input type="text" id="fld_${colNm}" name="${colNm}" value="<s:property value="val"/>" maxlength="${maxLen}" class="${cssClass}" style="${cssStyle}" />
 							<s:if test="html">
 								&nbsp;<a href="#" onclick="showEditor('#fld_${colNm}');return false;">HTML</a>
 							</s:if>
-							&nbsp;<span class="field-info">Text(${maxLen})</span> 
+							<s:if test="dataType=='char'">
+								&nbsp;<span class="field-info">Text(${maxLen})</span> 
+							</s:if>
+							<s:else>
+								&nbsp;<span class="field-info">Number(${maxLen})</span> 						
+							</s:else>
 						</s:if>
 						<s:if test="%{renderType=='textarea'}" >
-							<textarea id="fld_${colNm}" name="${colNm}" class="${cssClass}"><s:property value="val"/></textarea>
+							<textarea id="fld_${colNm}" name="${colNm}" class="${cssClass}" style="${cssStyle}" ><s:property value="val"/></textarea>
 							<s:if test="html">
 								&nbsp;<a href="#" onclick="showEditor('#fld_${colNm}');return false;">HTML</a>
 							</s:if>
 							&nbsp;<span class="field-info">Text(${maxLen})</span> 
 						</s:if>
 						<s:if test="%{renderType=='list'}" >
-							<select name="${colNm}" class="${cssClass}">
+							<select name="${colNm}" class="${cssClass}" style="${cssStyle}" >
 								<option value=""></option>
 								<s:set name="colkey" value="%{colNm}" />
 								<s:iterator value="%{listMap[#colkey]}">
@@ -80,7 +82,7 @@
 				</s:if>
 				</s:iterator>			
 			</table>
-				<input type="hidden" name="keyVal" value="${keyVal}" />
+				<input type="hidden" name="key" value="${key}" />
 			<s:iterator value="row.collist">
 				<s:if test="%{!isMeta() && renderType=='hidden'}">			
 					<input type="hidden" name="${colNm}" value="<s:property value="val"/>" />
@@ -93,9 +95,6 @@
 	
 	</td>
 	</tr></table>	
-	
-	<script type="text/javascript">
-		$( document ).tooltip();
-	</script>
+
 </body>
 </html>

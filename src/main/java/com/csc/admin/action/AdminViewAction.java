@@ -93,14 +93,34 @@ public class AdminViewAction extends AdminAction {
 		// retrieve the table
 		tbl = metadao.getTableForUrl(tblUrlNm);
 		// retrieve the table columns
-		List<AdminCol> selcols = metadao.getColList(tbl.getTblNm());		
+		List<AdminCol> cols = metadao.getColList(tbl.getTblNm());		
+		// set default values
+		for (AdminCol col : cols) {
+			String dflt = col.getDflt();
+			if (dflt != null) {
+				if (AdminConstants.DFLT_TYPE_INCREMENT.equals(dflt)) {
+					
+					col.setVal(sqlRunner.executeIncrementSql(sqlBuilder.buildIncrementSql(tbl, col)));
+					
+				} else if (AdminConstants.DFLT_TYPE_SEQUENCE.equals(dflt)) {
+		
+					col.setVal(sqlRunner.executeIncrementSql(sqlBuilder.buildSequenceSql(col.getDfltVal())));
+					
+				} else {
+					col.setVal(col.getDfltVal());
+				}
+			}
+		}
+		
 		// create an empty row object
-		row = new AdminRow("", selcols);
+		row = new AdminRow("", cols);
 		// retrieve select lists
-		retrieveSelectLists(selcols);
+		retrieveSelectLists(cols);
 		log.debug("leaving admin add action...");
 		return SUCCESS;
 	}
+	
+
 	
 	public String updRecord() {
 		log.debug("entering admin update action...");
@@ -114,8 +134,7 @@ public class AdminViewAction extends AdminAction {
 				while (pnms.hasMoreElements()) {
 					Object nm = pnms.nextElement();
 					log.debug("parameter " + nm + " = " + data.get(nm)[0]);
-				}
-				
+				}	
 				
 			} else {
 				log.debug("parameter map is null or empty!");
@@ -128,17 +147,27 @@ public class AdminViewAction extends AdminAction {
 		List<AdminCol> keycols = metadao.getColKeyList(tbl.getTblNm()); 
 		List<AdminCol> selcols = metadao.getColList(tbl.getTblNm());
 		
+		if (super.validateRecord(updcols, data)) {
+			String sql = sqlBuilder.buildUpdSql(tbl, key, updcols, metacols, keycols, data, getSessionUserId(), getLangCd());
+			int result = sqlRunner.executeUpdSql(sql);
+			log.debug("# records updated: " + result);
+			// turn around and retrieve the record to get latest meta data
+			sql = sqlBuilder.buildSelSql(tbl, key, selcols, keycols, getLangCd());
+			row = sqlRunner.executeSelSql(selcols, sql);
+
+			log.debug("leaving update action...");
+
+			return SUCCESS;			
+		} else {
+			retrieveRecord(true);
+			log.debug("validation errors occurred, returning to input...");
+
+			return INPUT;			
+			
+		}
 		
-		String sql = sqlBuilder.buildUpdSql(tbl, key, updcols, metacols, keycols, data, getSessionUserId(), getLangCd());
-		int result = sqlRunner.executeUpdSql(sql);
-		log.debug("# records updated: " + result);
-		// turn around and retrieve the record to get latest meta data
-		sql = sqlBuilder.buildSelSql(tbl, key, selcols, keycols, getLangCd());
-		row = sqlRunner.executeSelSql(selcols, sql);
+		
 
-		log.debug("leaving update action...");
-
-		return SUCCESS;
 	}
 	
 	public String insRecord() {
@@ -165,37 +194,64 @@ public class AdminViewAction extends AdminAction {
 		List<AdminCol> keycols = metadao.getColKeyList(tbl.getTblNm()); 
 		List<AdminCol> inscols = metadao.getColList(tbl.getTblNm());
 		
-		int result = 0;
-		if ("Y".equalsIgnoreCase(cloneLang)) {
-			List<ListItem> langList = metadao.getList("lst_language", getLangCd());
-			for (ListItem l : langList) {
-				String sql = sqlBuilder.buildInsSql(tbl, inscols, data, getSessionUserId(), l.getId());
-				result += sqlRunner.executeUpdSql(sql);					
+		if (super.validateRecord(inscols, data)) {
+			int result = 0;
+			if ("Y".equalsIgnoreCase(cloneLang)) {
+				List<ListItem> langList = metadao.getList("language", getLangCd());
+				for (ListItem l : langList) {
+					String sql = sqlBuilder.buildInsSql(tbl, inscols, data, getSessionUserId(), l.getId());
+					result += sqlRunner.executeUpdSql(sql);					
+				}
+			} else {
+				String sql = sqlBuilder.buildInsSql(tbl, inscols, data, getSessionUserId(), getLangCd());
+				result = sqlRunner.executeUpdSql(sql);			
 			}
-		} else {
-			String sql = sqlBuilder.buildInsSql(tbl, inscols, data, getSessionUserId(), getLangCd());
-			result = sqlRunner.executeUpdSql(sql);			
-		}
-		log.debug("# records updated: " + result);
-		
-		// generate the key value
-		StringBuilder keyval = new StringBuilder();
-		boolean first = true;
-		for (AdminCol k : keycols) {
-			if (!first) { keyval.append(AdminConstants.KEY_DELIMITER); }
-			keyval.append(data.get(k.getColNm())[0]);
-			first = false;
-		}
-		key = keyval.toString();
-		
-		// turn around and retrieve the record to get latest meta data
-		String sql = sqlBuilder.buildSelSql(tbl, key, inscols, keycols, getLangCd());
-		row = sqlRunner.executeSelSql(inscols, sql);
-		
-		
-		log.debug("leaving insert action...");
+			log.debug("# records updated: " + result);
+			
+			// generate the key value
+			StringBuilder keyval = new StringBuilder();
+			boolean first = true;
+			for (AdminCol k : keycols) {
+				if (!first) { keyval.append(AdminConstants.KEY_DELIMITER); }
+				keyval.append(data.get(k.getColNm())[0]);
+				first = false;
+			}
+			key = keyval.toString();
+			
+			// turn around and retrieve the record to get latest meta data
+			String sql = sqlBuilder.buildSelSql(tbl, key, inscols, keycols, getLangCd());
+			row = sqlRunner.executeSelSql(inscols, sql);
+			
+			
+			log.debug("leaving insert action...");
 
-		return SUCCESS;
+			return SUCCESS;			
+		} else {
+			log.debug("validation errors occurred, returning to input...");
+			addRecord();
+			return INPUT;
+		}
+		
+
+	}
+	
+	public String delRecord() {
+		log.debug("entering admin delete action...");
+		
+		String returnval = SUCCESS;
+		try {
+			tbl = metadao.getTableForUrl(tblUrlNm);
+			List<AdminCol> keycols = metadao.getColKeyList(tbl.getTblNm()); 
+			
+			String sql = sqlBuilder.buildDelSql(tbl, keycols, key);
+			sqlRunner.executeUpdSql(sql);			
+		} catch (Exception e) {
+			addActionError("Failed to delete record: " + e.getMessage());
+			retrieveRecord(false);
+			returnval = INPUT;
+			
+		}
+		return returnval;		
 	}
 	
 	

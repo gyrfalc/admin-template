@@ -23,6 +23,7 @@ public class AdminCol {
 	private String sortDir;
 	private String srchInd;
 	private String keyInd;
+	private String reqInd;
 	private String metaInd;
 	private String metaType;
 	private String renderType;
@@ -61,8 +62,24 @@ public class AdminCol {
 	
 	public String getCssClass() {
 		buildRenderMap();
-		if (renderMap.containsKey(AdminConstants.RENDER_PARAM_CSS)) { return renderMap.get(AdminConstants.RENDER_PARAM_CSS); }
+		if (renderMap.containsKey(AdminConstants.RENDER_PARAM_CSS_CLASS)) { return renderMap.get(AdminConstants.RENDER_PARAM_CSS_CLASS); }
 		else return "";
+	}
+	public String getCssStyle() {
+		buildRenderMap();
+		if (renderMap.containsKey(AdminConstants.RENDER_PARAM_CSS_STYLE)) { return renderMap.get(AdminConstants.RENDER_PARAM_CSS_STYLE); }
+		else return "";
+		
+	}
+	public String getDflt() {
+		buildRenderMap();
+		if (renderMap.containsKey(AdminConstants.RENDER_PARAM_DFLT)) { return renderMap.get(AdminConstants.RENDER_PARAM_DFLT); }
+		else return null;
+	}
+	public String getDfltVal() {
+		buildRenderMap();
+		if (renderMap.containsKey(AdminConstants.RENDER_PARAM_DFLT_VAL)) { return renderMap.get(AdminConstants.RENDER_PARAM_DFLT_VAL); }
+		else return "";		
 	}
 	public boolean isKey() {
 		return "Y".equalsIgnoreCase(this.keyInd);
@@ -80,6 +97,9 @@ public class AdminCol {
 	public String getListNm() {
 		buildRenderMap();
 		return (renderMap.get(AdminConstants.RENDER_PARAM_LIST_NM));
+	}
+	public boolean isReq() {
+		return "Y".equalsIgnoreCase(this.reqInd);
 	}
 	
 	public String buildWhereClause() {
@@ -131,6 +151,7 @@ public class AdminCol {
 		col.setSortDir(this.getSortDir());
 		col.setSrchInd(this.getSrchInd());
 		col.setKeyInd(this.getKeyInd());
+		col.setReqInd(this.getReqInd());
 		col.setMetaInd(this.getMetaInd());
 		col.setMetaType(this.getMetaType());
 		col.setRenderType(this.getRenderType());
@@ -272,5 +293,13 @@ public class AdminCol {
 
 	public void setDsplTblInd(String dsplTblInd) {
 		this.dsplTblInd = dsplTblInd;
+	}
+
+	public String getReqInd() {
+		return reqInd;
+	}
+
+	public void setReqInd(String reqInd) {
+		this.reqInd = reqInd;
 	}
 }

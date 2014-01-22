@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.csc.admin.data.AdminBldrDao;
+import com.csc.admin.model.AdminCol;
 import com.csc.admin.model.AdminTbl;
 import com.csc.admin.model.ListItem;
 import com.csc.admin.util.AdminConstants;
@@ -159,7 +160,7 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 		List<ListItem> list = (List<ListItem>) session.get("lang-list");
 		if (list == null || list.size() == 0) {
 			try {
-				list = metadao.getList("lst_language", "en");
+				list = metadao.getList("language", "en");
 				if (list.size() == 0) {
 					list = this.buildMinimalLangList();
 				}
@@ -184,7 +185,7 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 		List<AdminTbl> tblList = (List<AdminTbl>) session.get(AdminConstants.SESSION_VAR_TBL_LIST);
 		
 		if (tblList == null) {
-			tblList = metadao.getTableList();
+			tblList = metadao.getTableList(AdminConstants.TBL_TYPE_EDIT);
 			setTblList(tblList);
 		}
 		
@@ -195,5 +196,70 @@ public class AdminAction  extends ActionSupport  implements SessionAware, Parame
 		session.put(AdminConstants.SESSION_VAR_TBL_LIST, tblList);
 	}
 	
-
+	public List<AdminTbl> getVwList() {
+		@SuppressWarnings("unchecked")
+		List<AdminTbl> vwList = (List<AdminTbl>) session.get(AdminConstants.SESSION_VAR_VIEW_LIST);
+		
+		if (vwList == null) {
+			vwList = metadao.getTableList(AdminConstants.TBL_TYPE_VIEW);
+			setVwList(vwList);
+		}
+		
+		return vwList;		
+	}
+	
+	public void setVwList(List<AdminTbl> vwList) {
+		session.put(AdminConstants.SESSION_VAR_VIEW_LIST, vwList);
+	}
+	
+	
+	public List<AdminTbl> getMetaList() {
+		@SuppressWarnings("unchecked")
+		List<AdminTbl> metaList = (List<AdminTbl>) session.get(AdminConstants.SESSION_VAR_META_LIST);
+		
+		if (metaList == null) {
+			metaList = metadao.getTableList(AdminConstants.TBL_TYPE_META);
+			setMetaList(metaList);
+		}
+		
+		return metaList;		
+	}
+	
+	public void setMetaList(List<AdminTbl> metaList) {
+		session.put(AdminConstants.SESSION_VAR_META_LIST, metaList);
+	}
+	
+	protected boolean validateRecord(List<AdminCol> valcols, Map <String, String[]> data) {
+		boolean valid = true;
+		
+		for (AdminCol col : valcols) {
+			
+			if (data.containsKey(col.getColNm())) {
+				String val = data.get(col.getColNm())[0];
+				if (StringUtils.isEmpty(val)) {
+					//test required
+					if (col.isReq()) {
+						addActionError(col.getDsplNm() + " is a required field.");
+						valid = false;
+					}
+				} else {
+					//test length
+					if (val.length() > col.getMaxLen()) {
+						addActionError(col.getDsplNm() + " may not exceed " + col.getMaxLen() + " characters.");
+					}
+				}				
+				
+			} else {
+				//test required
+				if (col.isReq()) {
+					addActionError(col.getDsplNm() + " is a required field.");
+					valid = false;
+				}
+			}
+			
+		}
+		
+		
+		return valid;
+	}
 }

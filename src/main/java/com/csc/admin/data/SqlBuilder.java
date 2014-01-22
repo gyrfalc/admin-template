@@ -1,5 +1,7 @@
 package com.csc.admin.data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,7 @@ import com.csc.admin.util.AdminConstants;
 public class SqlBuilder {
 
 	private static final Logger log = Logger.getLogger(SqlBuilder.class);
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy");
 	
 	public String buildListSql(AdminTbl tbl, List<AdminCol> selcols, List<AdminCol> sortcols, String langCd) {
 		return buildListSql(tbl, selcols, sortcols, langCd, null);
@@ -159,9 +162,9 @@ public class SqlBuilder {
 			if (AdminConstants.META_TYPE_UPD_USER.equals(m.getMetaType())) {
 				sql.append(", ").append(m.getColNm()).append(" = ").append(buildColVal(userId, m.getDataType()));
 			}
-			//TODO add meta dates to update
-			
-			//TODO add pub status and dates to update
+			else if (AdminConstants.META_TYPE_UPD_DT.equals(m.getMetaType())) {
+				sql.append(", ").append(m.getColNm()).append(" = ").append(buildColVal(DATE_FORMAT.format(new Date()), AdminConstants.DATA_TYPE_STRING));
+			} 
 		}
 		
 		// add the where clause
@@ -214,12 +217,15 @@ public class SqlBuilder {
 				} 
 				else if (AdminConstants.META_TYPE_UPD_USER.equals(i.getMetaType())) {
 					sql.append(buildColVal(userId, i.getDataType()));
+				}
+				else if (AdminConstants.META_TYPE_INS_DT.equals(i.getMetaType())) {
+					sql.append(buildColVal(DATE_FORMAT.format(new Date()), AdminConstants.DATA_TYPE_STRING));
+				}
+				else if (AdminConstants.META_TYPE_UPD_DT.equals(i.getMetaType())) {
+					sql.append(buildColVal(DATE_FORMAT.format(new Date()), AdminConstants.DATA_TYPE_STRING));
 				} else {
 					sql.append("null");
 				}
-				//TODO add meta dates to insert, read format from property file
-				
-				//TODO add pub status and dates to insert
 			} else {
 				sql.append(buildColVal(data.get(i.getColNm())[0], i.getDataType()));
 			}
@@ -232,6 +238,29 @@ public class SqlBuilder {
 		
 
 	}	
+	
+	public String buildDelSql(AdminTbl tbl, List<AdminCol> keycols, String key) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("delete from ").append(tbl.getTblNm());
+		sql.append(" where ");
+		if (keycols.size() > 1) {
+			String[] keyvals = key.split(AdminConstants.KEY_DELIMITER);
+			for (int i=0; i<keycols.size(); i++) {
+				AdminCol keycol = keycols.get(i);
+				if (i > 0) {
+					sql.append(" and ");
+				}
+				sql.append(keycol.getColNm()).append(" = ").append(buildColVal(keyvals[i],keycol.getDataType()));
+			}
+						
+		} else {
+			AdminCol keycol = keycols.get(0);
+			sql.append(keycol.getColNm()).append(" = ").append(buildColVal(key,keycol.getDataType()));
+		}
+
+		return sql.toString();
+	}
 	
 	
 	private String buildColQry(String name, String val, String dataType, String renderType) {
@@ -280,5 +309,19 @@ public class SqlBuilder {
 		return buildListSql(tbl, selcols, sortcols, langCd, sql.toString());
 	}
 
+	public String buildIncrementSql(AdminTbl tbl, AdminCol col) {
+		log.debug("build increment sql...");
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select max(").append(col.getColNm()).append(") + 1 from ").append(tbl.getTblNm());
+		
+		return sql.toString();
+	}
+	
+	public String buildSequenceSql(String seqNm) {
+		log.debug("build sequence sql...");
+		
+		return "select " + seqNm + ".nextval from dual";
+	}
 }
 

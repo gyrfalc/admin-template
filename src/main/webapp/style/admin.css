@@ -85,7 +85,7 @@ table.form-layout td {
 }
 
 td.label {
-	width:150px;
+	width:200px;
 	vertical-align: top;
 	font-weight: bold;
 	border-bottom: 1px dotted #ddd;
@@ -123,7 +123,7 @@ td.ERROR {
 	font-style: italic;
 	padding: 5px;
 	border: 1px solid red;
-	margin: 5px 220px 0 0;
+	margin: 5px 0 0 20px;
 }
 
 .action-error ul {
@@ -136,7 +136,7 @@ td.ERROR {
 	padding: 5px;
 	border: 1px solid blue;
 	color: blue;
-	margin: 5px 220px 0 0;	
+	margin: 5px 0 0 20px;	
 }
 .action-message ul {
 	list-style-type: none;
@@ -148,7 +148,7 @@ div.table-list {
 	width: 200px;
 	float: left;
 	border: 1px solid #bbb;
-	height: 600px;
+	height: 300px;
 }
 td.table-list {
 	vertical-align:top; 
@@ -156,7 +156,7 @@ td.table-list {
 }
 
 .table-list-wrapper {
-	height: 550px;
+	height: 257px;
 	overflow-y: scroll;
 	padding: 5px;
 }
@@ -185,12 +185,14 @@ td.table-list {
 }
 
 .instructions {
-	width: 200px;
-	float: right;
-	border-left: 1px solid #bbb;
-	height: 570px;
-	margin-top: 30px;
-	padding: 3px;
+	font-style: italic;
+	padding: 5px;
+	margin: 5px 0 0 20px;	
+}
+.warning {
+	font-weight: bold;
+	font-size: 110%;
+	color: red;
 }
 
 .tbl-instr {

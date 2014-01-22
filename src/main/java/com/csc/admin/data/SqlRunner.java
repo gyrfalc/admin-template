@@ -162,5 +162,40 @@ public class SqlRunner {
 		
 		return retcount;	
 	}
+	
+	public int executeIncrementSql(String sql) {
+		log.debug("execute increment sql...");
+		log.debug(sql);
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		int val = 0;
+		
+		try {
+			conn = DataSource.getInstance().getConnection();
+			statement = conn.createStatement();
+			rs = statement.executeQuery(sql);
+			rs.next();
+			
+			val = rs.getInt(1);
+			
+		} catch (Exception e) {
+			log.error("failed to execute update SQL", e);
+		} finally {
+			if (rs != null) {
+				try { rs.close(); } catch (Exception e) {}
+			}
+
+			if (statement != null) {
+				try { statement.close(); } catch (Exception e) {}
+			}
+			
+			if (conn != null) {
+				try { conn.close(); } catch (Exception e) {}
+			}
+		}
+		
+		return val;			
+	}
 
 }

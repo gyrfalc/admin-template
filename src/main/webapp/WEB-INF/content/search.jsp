@@ -1,23 +1,13 @@
 <%@ include file="/common/taglibs.jsp"%>
-<s:url id="contextURL" value="/" includeParams="none"/>
+<s:url id="contextURL" value="/" includeParams="none" encode="false"/>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>${tbl.dsplNm} - Search</title>
-	<script src="<s:url value="/ckeditor/ckeditor.js"  includeParams="false"/>"></script>
-	<script src="<s:url value="/ckeditor/adapters/jquery.js"  includeParams="false"/>"></script>
-	
-	<style>
-	 .ui-tooltip {
-		padding: 10px 20px;
-		color: #444;
-		border-radius: 5px;
-		box-shadow: 0 0 7px black;
-		background-color: white;
-		width: 300px;
-	}
-	</style>
+	<script src="<s:url value="/ckeditor/ckeditor.js"  includeParams="none" encode="false"/>"></script>
+	<script src="<s:url value="/ckeditor/adapters/jquery.js"  includeParams="none" encode="false"/>"></script>
+
 </head>
 	<jsp:include page="/common/page-header.jsp"/>	
 	
@@ -32,7 +22,7 @@
 		<jsp:include page="/common/menu-search.jsp"/>	
 
 		<div id="div-form-editor" class="sub-content">
-		<form id="frm-srch" action="<s:url value="/search-result"  includeParams="false"/>/${tblUrlNm}" method="post">
+		<form id="frm-srch" action="<s:url value="/search-result"  includeParams="none" encode="false"/>/${tblUrlNm}" method="post">
 			<table class="form-layout">
 				<s:iterator value="row.collist">
 				<tr>

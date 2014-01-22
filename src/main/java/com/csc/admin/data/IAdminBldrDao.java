@@ -10,7 +10,7 @@ import com.csc.admin.model.ListItem;
 
 public interface IAdminBldrDao {
 	
-	public List<AdminTbl> getTableList();
+	public List<AdminTbl> getTableList(String tblType);
 	public AdminTbl getTableForUrl(String tblNm);
 	
 	public List<AdminCol> getColList(String tblNm);

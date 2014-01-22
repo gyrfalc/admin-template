@@ -1,5 +1,5 @@
 <%@ include file="/common/taglibs.jsp"%>
-<s:url id="contextURL" value="/" includeParams="none"/>
+<s:url id="contextURL" value="/" includeParams="none" encode="false"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +35,7 @@
 						<s:iterator value="rowlist">
 						<tr>
 							<td>
-								<a href="${contextURL}view/${tbl.urlNm}?key=${keyVal}"><s:property value="keyVal"/></a>
+								<a href="${contextURL}view/${tbl.urlNm}?key=${key}"><s:property value="key"/></a>
 							</td>
 							<s:iterator value="collist">
 								<td><s:property value="val" escape="false"/></td>

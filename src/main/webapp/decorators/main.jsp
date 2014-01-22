@@ -6,12 +6,12 @@
 	<%@ include file="/common/meta.jsp" %>
 
 	<title><decorator:title/></title>
-	<link rel="icon" href="<s:url value="/images/database_edit.png" includeParams="false" />" type="image/png" />
+	<link rel="icon" href="<s:url value="/images/database_edit.png" includeParams="none"  encode="false"/>" type="image/png" />
 	
 	<!-- DataTables CSS -->
 	<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
 	<!-- APP CSS -->
-	<link rel="stylesheet" type="text/css" media="all" href="<s:url value="/style/admin.css"  includeParams="false" />" />
+	<link rel="stylesheet" type="text/css" media="all" href="<s:url value="/style/admin.css"  includeParams="none"  encode="false"/>" />
 	
 	 
 	<!-- jQuery -->

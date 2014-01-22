@@ -1,5 +1,5 @@
 <%@ include file="/common/taglibs.jsp"%>
-<s:url id="contextURL" value="/" includeParams="none"/>
+<s:url id="contextURL" value="/" includeParams="none" encode="false"/>
 <div id="div-action-menu">
 	<ul class="menu-layout">
 		<li><a href="${contextURL}home">home</a></li>	

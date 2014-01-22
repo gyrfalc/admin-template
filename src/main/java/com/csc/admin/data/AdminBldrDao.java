@@ -20,23 +20,26 @@ public class AdminBldrDao implements IAdminBldrDao {
 	private static final Logger log = Logger.getLogger(AdminBldrDao.class);
 
 	@Override
-	public List<AdminTbl> getTableList() {
+	public List<AdminTbl> getTableList(String tblType) {
 		log.debug("get table list...");
 		Connection conn = null;
-		Statement statement = null;
+		PreparedStatement statement = null;
 		ResultSet rs = null;
 		ArrayList<AdminTbl> list = new ArrayList<AdminTbl>();
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select tbl_nm, dspl_nm, url_nm");
 		sql.append(" from admin_tbl");
+		sql.append(" where tbl_type = ?");
 		sql.append(" order by dspl_nm");
+		
+		log.debug(sql.toString());
 		
 		try {
 			conn = DataSource.getInstance().getConnection();
-			statement = conn.createStatement();
-			log.debug(sql.toString());
-			rs = statement.executeQuery(sql.toString());
+			statement = conn.prepareStatement(sql.toString());
+			statement.setString(1, tblType);
+			rs = statement.executeQuery();
 			
 			while (rs.next()) {
 				AdminTbl tbl = new AdminTbl();
@@ -134,7 +137,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, req_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" order by dspl_ord");
@@ -159,6 +162,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				col.setSortDir(rs.getString("sort_dir"));
 				col.setSrchInd(rs.getString("srch_ind"));
 				col.setKeyInd(rs.getString("key_ind"));
+				col.setReqInd(rs.getString("req_ind"));
 				col.setMetaInd(rs.getString("meta_ind"));
 				col.setMetaType(rs.getString("meta_type"));
 				col.setRenderType(rs.getString("render_type"));
@@ -199,7 +203,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, req_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and dspl_tbl_ind = 'Y'");
@@ -225,6 +229,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				col.setSortDir(rs.getString("sort_dir"));
 				col.setSrchInd(rs.getString("srch_ind"));
 				col.setKeyInd(rs.getString("key_ind"));
+				col.setReqInd(rs.getString("req_ind"));
 				col.setMetaInd(rs.getString("meta_ind"));
 				col.setMetaType(rs.getString("meta_type"));
 				col.setRenderType(rs.getString("render_type"));
@@ -264,7 +269,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		ArrayList<AdminCol> list = new ArrayList<AdminCol>();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ind, sort_ord, sort_dir, srch_ind, key_ind, req_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and srch_ind = 'Y'");
@@ -290,6 +295,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				col.setSortDir(rs.getString("sort_dir"));
 				col.setSrchInd(rs.getString("srch_ind"));
 				col.setKeyInd(rs.getString("key_ind"));
+				col.setReqInd(rs.getString("req_ind"));
 				col.setMetaInd(rs.getString("meta_ind"));
 				col.setMetaType(rs.getString("meta_type"));
 				col.setRenderType(rs.getString("render_type"));
@@ -524,7 +530,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 		AdminCol col = new AdminCol();
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ord, sort_dir, srch_ind, key_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
+		sql.append(" select tbl_nm, col_nm, dspl_nm, dspl_ord, data_type, sort_ord, sort_dir, srch_ind, key_ind, req_ind, meta_ind, meta_type, render_type, render_params, col_desc, max_len, dspl_tbl_ind");
 		sql.append(" from admin_col");
 		sql.append(" where tbl_nm = ?");
 		sql.append(" and col_nm = ?");
@@ -547,6 +553,7 @@ public class AdminBldrDao implements IAdminBldrDao {
 				col.setSortDir(rs.getString("sort_dir"));
 				col.setSrchInd(rs.getString("srch_ind"));
 				col.setKeyInd(rs.getString("key_ind"));
+				col.setReqInd(rs.getString("req_ind"));				
 				col.setMetaInd(rs.getString("meta_ind"));
 				col.setMetaType(rs.getString("meta_type"));
 				col.setRenderType(rs.getString("render_type"));

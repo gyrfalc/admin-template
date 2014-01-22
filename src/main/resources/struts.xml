@@ -81,6 +81,7 @@
 		<action name="upd/*" class="com.csc.admin.action.AdminViewAction" method="updRecord">
 			<param name="tblUrlNm">{1}</param>
 			<result name="success">/WEB-INF/content/view.jsp</result>
+			<result name="input">/WEB-INF/content/edit.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
 			<interceptor-ref name="i18n"/>
@@ -88,13 +89,22 @@
 		<action name="ins/*" class="com.csc.admin.action.AdminViewAction" method="insRecord">
 			<param name="tblUrlNm">{1}</param>
 			<result name="success">/WEB-INF/content/view.jsp</result>
+			<result name="input">/WEB-INF/content/add.jsp</result>
+			<interceptor-ref name="basicStack"/>
+			<interceptor-ref name="staticParams" />
+			<interceptor-ref name="i18n"/>
+		</action>
+		<action name="del/*" class="com.csc.admin.action.AdminViewAction" method="delRecord">
+			<param name="tblUrlNm">{1}</param>
+			<result name="success" type="redirectAction">list/{1}</result>
+  			<result name="error" type="redirectAction">error</result>
+			<result name="input">/WEB-INF/content/view.jsp</result>
 			<interceptor-ref name="basicStack"/>
 			<interceptor-ref name="staticParams" />
 			<interceptor-ref name="i18n"/>
 		</action>
 		
 	</package>
-	
 
 	<package name="ajax" namespace="/ajax" extends="struts-default">
 		
