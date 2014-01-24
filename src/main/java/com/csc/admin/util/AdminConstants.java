@@ -13,6 +13,7 @@ public class AdminConstants {
 	
 	public static final String RENDER_TYPE_LIST = "list";
 	
+	public static final String RENDER_PARAM_READONLY = "readonly";
 	public static final String RENDER_PARAM_CSS_CLASS = "class";
 	public static final String RENDER_PARAM_CSS_STYLE  = "style";
 	public static final String RENDER_PARAM_LIST_NM = "list";

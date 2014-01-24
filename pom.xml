@@ -278,7 +278,7 @@
 
 	 <profiles>
         <profile>
-            <id>dev</id>
+            <id>safespec-eu-chem</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>						

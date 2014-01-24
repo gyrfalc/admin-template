@@ -43,6 +43,12 @@
 						<s:property value="val"/>
 					</s:if><s:else>				
 						<s:if test="%{renderType=='text'}" >
+							<s:if test="readOnly">
+							<input type="text" id="fld_${colNm}" name="${colNm}" value="<s:property value="val"/>" maxlength="${maxLen}" class="${cssClass}" style="${cssStyle}" readonly="readonly"/>
+							</s:if>
+							<s:else>
+							<input type="text" id="fld_${colNm}" name="${colNm}" value="<s:property value="val"/>" maxlength="${maxLen}" class="${cssClass}" style="${cssStyle}" />
+							</s:else>
 							<input type="text" id="fld_${colNm}" name="${colNm}" value="<s:property value="val"/>" maxlength="${maxLen}" class="${cssClass}" style="${cssStyle}" />
 							<s:if test="html">
 								&nbsp;<a href="#" onclick="showEditor('#fld_${colNm}');return false;">HTML</a>
@@ -55,7 +61,12 @@
 							</s:else>
 						</s:if>
 						<s:if test="%{renderType=='textarea'}" >
+							<s:if test="readOnly">
+							<textarea id="fld_${colNm}" name="${colNm}" class="${cssClass}" style="${cssStyle}" readonly="readonly"><s:property value="val" /></textarea>
+							</s:if>
+							<s:else>
 							<textarea id="fld_${colNm}" name="${colNm}" class="${cssClass}" style="${cssStyle}" ><s:property value="val"/></textarea>
+							</s:else>
 							<s:if test="html">
 								&nbsp;<a href="#" onclick="showEditor('#fld_${colNm}');return false;">HTML</a>
 							</s:if>

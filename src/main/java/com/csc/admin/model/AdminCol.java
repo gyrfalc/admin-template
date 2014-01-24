@@ -91,6 +91,10 @@ public class AdminCol {
 		buildRenderMap();
 		return (renderMap.containsKey(AdminConstants.RENDER_PARAM_HTML));
 	}
+	public boolean isReadOnly() {
+		buildRenderMap();
+		return (renderMap.containsKey(AdminConstants.RENDER_PARAM_READONLY));		
+	}
 	public boolean isList() {
 		return AdminConstants.RENDER_TYPE_LIST.equals(this.renderType);
 	}
